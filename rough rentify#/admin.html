@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WedRentify Admin Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="index.js"></script>
+</head>
+<body class="bg-red-50 text-gray-800">
+  <!-- Navbar -->
+  <div class="navbar bg-red-700 text-white flex justify-between items-center p-4 shadow-lg">
+    <div class="text-xl font-extrabold tracking-wide flex items-center space-x-2 text-white">
+      <span class="text-red-300">❤</span>
+      <span class="text-white">WedRentify</span>
+    </div>
+
+    <button class="lg:hidden text-white focus:outline-none" id="menu-toggle">☰</button>
+
+    <div class="hidden lg:flex items-center space-x-8 mr-16" id="nav-links">
+      <a href="#dashboard" class="hover:text-red-200 transition">Dashboard</a>
+      <a href="admindispute.html" class="hover:text-red-200 transition">Disputes</a>
+      <a href="delivery-management.html" class="hover:text-red-200 transition">Orders Management</a>
+      <a href="user-management.html" class="hover:text-red-200 transition">User Management</a>
+      <a href="securitydeposits.html" class="hover:text-red-200 transition">Security Deposits</a>
+      <a href="admin-manage-venue.html" class="hover:text-red-200 transition">Manage Venues</a>
+      <a href="manage-drycleaners.html" class="hover:text-red-200 transition">Manage Dry Cleaners</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="p-6">
+    <section id="dashboard" class="mb-8">
+      <h2 class="text-3xl font-bold mb-4 text-red-800">Admin Dashboard</h2>
+      <div class="grid grid-cols-3 gap-6">
+       <!-- Total Users Card -->
+<div class="bg-white p-6 rounded-lg shadow-md text-center border border-red-200">
+  <h3 class="text-xl font-semibold text-red-700">Total Users</h3>
+  
+  <!-- Is ID se hum is number ko update karein gay -->
+  <p id="totalUsersCount" class="text-2xl text-gray-800">0</p>
+</div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center border border-red-200">
+          <h3 class="text-xl font-semibold text-red-700">Total Orders</h3>
+         <p id="totalOrdersCount" class="text-2xl text-gray-800">0</p>
+        </div>
+       
+      </div>
+
+      <div class="mt-6 bg-white p-6 rounded-lg shadow-md border border-red-200">
+        <canvas id="usersChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Logout Button at Bottom -->
+    <div class="text-center mt-12">
+      <a href="admin-login.html" class="inline-block bg-white text-red-700 border border-red-500 px-5 py-2 rounded-lg hover:bg-red-100 transition font-semibold">
+        Logout
+      </a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+  // Is script ko apne <script> tag ke andar daalein
+
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await fetchTotalOrders();
+    const response = await fetch('http://127.0.0.1:8000/api/accounts/users/');
+    const users = await response.json();
+    
+    // Sirf total number of users get karein
+    const totalUsers = users.length;
+ 
+    
+    // HTML element ko ID se pakrein aur update kar dein
+    document.getElementById('totalUsersCount').textContent = totalUsers;
+
+  } catch (error) {
+    console.error("Failed to fetch total users:", error);
+    document.getElementById('totalUsersCount').textContent = 'Error';
+  }
+});
+    
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+      document.getElementById("nav-links").classList.toggle("hidden");
+    });
+    async function fetchTotalOrders() {
+        const ordersApiUrl = "http://127.0.0.1:8000/api/rentals/my-orders/";
+        const orderCountElement = document.getElementById('totalOrdersCount');
+
+        if (!orderCountElement) return;
+
+        try {
+            const response = await fetch(ordersApiUrl);
+            if (!response.ok) {
+                // If API requires admin authentication and fails, it will hit this
+                throw new Error(`API call failed with status: ${response.status}`);
+            }
+
+            const orders = await response.json();
+            // Total count is the length of the array
+            orderCountElement.textContent = orders.length; 
+
+        } catch (error) {
+            console.error("Failed to fetch total orders:", error);
+            orderCountElement.textContent = 'Error';
+        }
+    }
+
+    // ---
+    // --- Step 1: Global variables banayein ---
+let totalSellers = 0;
+let totalBuyers = 0;
+
+
+// --- Step 2: Function jo API se data fetch karke variables ko update karega ---
+async function fetchUserCounts() { 
+  try {
+    // API se users ka data fetch karein
+    const response = await fetch("http://127.0.0.1:8000/api/accounts/users/");
+    if (!response.ok) {
+      throw new Error(`API call failed: ${response.status}`);
+    }
+    const users = await response.json();
+
+    // Local counters
+    let sellerCount = 0;
+    let buyerCount = 0;
+
+    // Har user ko check karein aur count karein
+    users.forEach(user => {
+      // ----- YEH WALI LINE THEEK KI GAYI HAI -----
+      // Ab yeh 'user.type' ko check kar raha hai
+      if (user.type && user.type.toLowerCase() === 'seller') {
+        sellerCount++;
+      } else if (user.type && user.type.toLowerCase() === 'buyer') {
+        buyerCount++;
+      }
+    });
+    
+    // Global variables ko final count se update kar dein
+    totalSellers = sellerCount;
+    totalBuyers = buyerCount;
+
+    // Console mein check karne ke liye (Optional)
+    console.log("Final Counts:", { 
+        sellers: totalSellers, 
+        buyers: totalBuyers 
+    });
+
+  } catch (error)
+   {
+    console.error("User data fetch karne mein error:", error);
+  }
+}
+
+
+// --- Step 3: Apne chart walay code ko is tarah call karein ---
+
+// Pehle data fetch karne wala function call karein
+fetchUserCounts().then(() => {
+    // Jab data fetch ho jaye aur variables update ho jayein,
+    // tab chart banayein.
+
+    console.log("Data ready. Creating chart now...");
+
+    const usersCtx = document.getElementById('usersChart').getContext('2d');
+    new Chart(usersCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Sellers', 'Buyers'],
+        datasets: [{
+          label: 'User Distribution',
+          
+          // Ab yahan aapke global variables kaam karein gay
+          data: [totalSellers, totalBuyers],
+          
+          backgroundColor: ['#F43F5E', '#F87171'],
+          borderColor: '#ffffff',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+});
+  </script>
+</body>
+</html>

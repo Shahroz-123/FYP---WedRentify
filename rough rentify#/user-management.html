@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Management (Admin)</title>
+  <link rel="stylesheet" href="user-management.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>User Management</h2>
+
+    <div class="form-section">
+      
+      <input type="text" id="username" placeholder="Username">
+     
+      <button onclick="SearchUser()">search</button>
+    </div>
+
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Username</th>
+          <th>CNIC</th>
+          <th>Email</th>
+          <th>Type</th>
+          <th>Delete users</th>
+        </tr>
+      </thead>
+      <tbody id="userBody">
+        <!-- Rows will appear here -->
+      </tbody>
+    </table>
+  </div>
+  <div class="back-home">
+    <button onclick="window.location.href='admin.html'">Back to Home</button>
+  </div>
+
+  <script src="user-management.js"></script>
+</body>
+</html>

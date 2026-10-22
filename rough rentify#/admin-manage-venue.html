@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Venue - Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+  <div class="mb-6">
+    <a href="admin.html"
+       class="inline-block bg-[#b71c1c] text-white px-4 py-2 rounded-md hover:bg-[#a61717] transition">
+      ← Back to Home
+    </a>
+  </div>
+
+  <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-bold text-gray-700 mb-4">Add New Venue</h2>
+    <form id="venue-form" enctype="multipart/form-data"> 
+      
+      <div class="mb-4">
+        <label for="venue-name" class="block text-gray-700 font-semibold">Venue Name</label>
+        <input type="text" id="venue-name" name="venue_name" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+      </div>
+
+      <div class="mb-4">
+        <label for="venue-city" class="block text-gray-700 font-semibold">City</label>
+        <select id="venue-city" name="venue_city" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+            <option value="">Select City</option>
+            <option value="Lahore">Lahore</option>
+            <option value="Karachi">Karachi</option>
+            <option value="Islamabad">Islamabad</option>
+            <option value="Rawalpindi">Rawalpindi</option>
+            <option value="Faisalabad">Faisalabad</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label for="venue-image" class="block text-gray-700 font-semibold">Venue Image (File)</label>
+        <input type="file" id="venue-image" name="venue_image" required accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-md">
+      </div>
+      
+      <div class="mb-4">
+        <label for="venue-description" class="block text-gray-700 font-semibold">Short Description (Max 255 chars)</label>
+        <textarea id="venue-description" name="venue_description" maxlength="255" class="w-full px-4 py-2 border border-gray-300 rounded-md"></textarea>
+      </div>
+      
+      <div class="mb-4">
+        <label for="per-head-price" class="block text-gray-700 font-semibold">Price Per Head (PKR)</label>
+        <input type="number" step="0.01" id="per-head-price" name="per_head_price" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+      </div>
+
+      <div class="mb-4">
+        <label for="contact-number" class="block text-gray-700 font-semibold"> Contact Number</label>
+        <input type="tel" id="contact-number" name="contact_number" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+      </div>
+
+      <button type="submit"
+              class="w-full bg-[#b71c1c] text-white py-2 rounded-md hover:bg-[#a61717] transition">
+        Add Venue
+      </button>
+    </form>
+  </div>
+
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-700 mb-4">Manage Venues</h2>
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border-b text-left">Venue Name</th>
+          <th class="px-4 py-2 border-b text-left">City</th>
+          <th class="px-4 py-2 border-b text-left">Image</th>
+          <th class="px-4 py-2 border-b text-left">Price/Head</th>
+          <th class="px-4 py-2 border-b text-left">Contact No</th>
+          <th class="px-4 py-2 border-b text-left">Action</th> 
+        </tr>
+      </thead>
+      <tbody id="venue-table-body">
+        <tr><td colspan="6" class="text-center py-4">Loading venues...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // === API base URL (change to your real backend URL if needed) ===
+    const API_BASE_URL = "http://127.0.0.1:8000/api/wedrentify_admin/venues";
+
+    const venueForm = document.getElementById('venue-form');
+    const venueTableBody = document.getElementById('venue-table-body');
+
+    // --- 1. Fetch and Render Table Data ---
+    async function loadVenues() {
+      venueTableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4">Loading venues...</td></tr>';
+      try {
+        const response = await fetch(`${API_BASE_URL}/list/`);
+        if (!response.ok) throw new Error("Failed to fetch data.");
+        const data = await response.json();
+
+        // If your API returns an object like { success: true, venues: [...] } adjust accordingly:
+        const venues = Array.isArray(data) ? data : (data.venues || []);
+
+        venueTableBody.innerHTML = ''; // Clear existing rows
+
+        if (!venues || venues.length === 0) {
+          venueTableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4">No venues found.</td></tr>';
+          return;
+        }
+
+        venues.forEach(venue => {
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+            <td class="px-4 py-2 border-b">${venue.name || ''}</td>
+            <td class="px-4 py-2 border-b">${venue.city || ''}</td>
+            <td class="px-4 py-2 border-b">
+              ${venue.image ? `<img src="${venue.image}" alt="Venue Image" class="w-20 h-20 object-cover rounded-md">` : 'N/A'}
+            </td>
+            <td class="px-4 py-2 border-b">PKR ${venue.per_head_price ?? 'N/A'}</td>
+            <td class="px-4 py-2 border-b">${venue.whatsapp_number || venue.contact_number || 'N/A'}</td>
+            <td class="px-4 py-2 border-b">
+              <button class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 transition" onclick="deleteVenue(${venue.id})">Delete</button>
+            </td>
+          `;
+          venueTableBody.appendChild(newRow);
+        });
+      } catch (error) {
+        console.error("Error loading venues:", error);
+        venueTableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-red-600">Error: Could not load data.</td></tr>`;
+      }
+    }
+
+    // --- 2. Handle Form Submission (Add Venue) ---
+    venueForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(venueForm);
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/add/`, {
+          method: "POST",
+          body: formData
+        });
+
+        // Try to parse JSON safely
+        let result = {};
+        try { result = await response.json(); } catch (err) { /* ignore parse error */ }
+
+        if (response.ok) {
+          alert(result.message || "Venue added successfully.");
+          venueForm.reset();
+          loadVenues(); // Refresh table
+        } else {
+          alert("Error adding venue: " + (result.error || result.message || "Server failed to process."));
+        }
+      } catch (error) {
+        console.error("Network Error during submission:", error);
+        alert("Network error. Could not connect to the server.");
+      }
+    });
+
+    // --- 3. Delete Venue (Global function) ---
+    async function deleteVenue(venueId) {
+      if (!confirm(`Are you sure you want to delete Venue ID #${venueId}?`)) return;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/delete/${venueId}/`, {
+          method: "DELETE",
+          headers: {
+            // If your backend requires a CSRF token or auth header, add it here
+            // 'X-CSRFToken': csrftoken
+          }
+        });
+
+        let result = {};
+        try { result = await response.json(); } catch (err) { /* ignore parse error */ }
+
+        if (response.ok) {
+          alert(result.message || "Venue deleted successfully.");
+          loadVenues(); // Refresh table
+        } else {
+          alert("Error deleting venue: " + (result.error || result.message || "Server error."));
+        }
+      } catch (error) {
+        console.error("Network Error during deletion:", error);
+        alert("Network error. Could not delete the venue.");
+      }
+    }
+
+    // Make deleteVenue globally accessible
+    window.deleteVenue = deleteVenue;
+
+    // Initial load when the page is ready
+    document.addEventListener('DOMContentLoaded', loadVenues);
+  </script>
+</body>
+</html>

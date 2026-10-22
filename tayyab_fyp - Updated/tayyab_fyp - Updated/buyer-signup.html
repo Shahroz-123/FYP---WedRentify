@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup as Buyer | WedRentify</title>
+  <link rel="stylesheet" href="buyersign.css">
+  <style>
+/* ... existing styles ... */
+button {
+    background-color: #b91c1c;
+    color: #fff;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+.modal-content input, .modal-content button {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+</style>
+
+</head>
+<body>
+  <div class="signup-container">
+    <div class="signup-box">
+      <h1>Create Buyer Account</h1>
+      <form id="buyerSignupForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="text" id="cnic" placeholder="CNIC" required>
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <button type="submit">Signup</button>
+      </form>
+
+      <p class="login-link">
+        Already have an account? <a href="login.html">Login</a>
+      </p>
+      <div class="back-home">
+        <a href="index.html" class="home-btn">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+  <div id="verification-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-content">
+    <h2 style="color: red;">Verify Email Address</h2>
+    <p>A verification code has been sent to your email.</p>
+    <input type="text" id="verificationCode" placeholder="Enter 6-digit Code" maxlength="6">
+    <button id="verifyButton">Verify Account</button>
+    <button id="cancelVerify">Cancel</button>
+    <p id="modalMessage" style="color: red;"></p>
+  </div>
+</div>
+
+
+  <!-- Inline JavaScript -->
+  <script>
+    // --- JAVASCRIPT PATCH 1: Verification Logic and Utility Variables ---
+
+// Utility variable to hold form data temporarily
+let pendingFormData = {};
+const verificationModal = document.getElementById("verification-modal"); 
+
+// --- Modal Button Handlers (Add these listeners near the start of the script) ---
+document.getElementById("verifyButton").addEventListener("click", verifyAndFinalizeSignup);
+document.getElementById("cancelVerify").addEventListener("click", () => {
+    verificationModal.style.display = 'none';
+    document.getElementById("modalMessage").textContent = '';
+});
+// --- End Modal Handlers ---
+
+// -----------------------------------------------------
+// FINAL SIGNUP LOGIC: Checks code, then creates account
+// -----------------------------------------------------
+async function verifyAndFinalizeSignup() {
+    const submittedCode = document.getElementById("verificationCode").value.trim();
+    const modalMessage = document.getElementById("modalMessage");
+    const verifyButton = document.getElementById("verifyButton");
+
+    if (submittedCode.length !== 6) {
+        modalMessage.textContent = "Please enter the 6-digit code.";
+        return;
+    }
+
+    verifyButton.disabled = true;
+    modalMessage.textContent = 'Verifying code...';
+
+    try {
+        // 1. Verify Code API Call (Checks if the code is correct)
+        const checkCodeResponse = await fetch("http://127.0.0.1:8000/api/accounts/verify-code/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: pendingFormData.email, code: submittedCode }),
+        });
+        
+        if (!checkCodeResponse.ok) {
+             const errorData = await checkCodeResponse.json();
+             throw new Error(errorData.error || "Invalid or expired code.");
+        }
+        
+        // 2. If verified, proceed to final account creation (Original Signup API)
+        const finalSignupResponse = await fetch("http://127.0.0.1:8000/api/accounts/buyer/signup/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(pendingFormData),
+        });
+
+        const data = await finalSignupResponse.json();
+
+        if (finalSignupResponse.ok) {
+            alert("✅ Account created and email verified successfully!");
+            window.location.href = "login.html";
+        } else {
+            alert("Error during final signup: " + (data.error || "Please check inputs."));
+        }
+
+    } catch (error) {
+        console.error("Verification/Signup Error:", error);
+        modalMessage.textContent = "Verification Failed: " + error.message;
+    } finally {
+        verifyButton.disabled = false;
+        verifyButton.textContent = 'Verify Account';
+    }
+}
+    // --- JAVASCRIPT PATCH 2: Main Form Listener (REPLACES EXISTING LISTENER) ---
+
+document.getElementById("buyerSignupForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    // 1. Gather data and store globally
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const cnic = document.getElementById("cnic").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    
+    // 🚨 Store data globally (for verification/final signup)
+    pendingFormData = { username, password, cnic, phone, email };
+
+    // 2. Trigger API to send verification code (This checks uniqueness and sends mail)
+    try {
+        const sendCodeResponse = await fetch("http://127.0.0.1:8000/api/accounts/send-verification-code/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email, username: username }),
+        });
+
+        const data = await sendCodeResponse.json();
+
+        if (sendCodeResponse.ok) {
+            // 3. Code sent successfully, show the verification modal
+            document.getElementById("verification-modal").style.display = 'flex';
+            document.getElementById("verificationCode").value = ''; 
+            document.getElementById("modalMessage").textContent = "Code sent! Check your inbox.";
+            alert("Verification code sent! Please check your email.");
+
+            // Optional: Clear form fields after data is stored
+            document.getElementById("buyerSignupForm").reset();
+
+        } else {
+            // Error: If email is already registered, or invalid, the backend will return an error here.
+            alert("Error: " + (data.error || "Unable to send code. Account might already exist."));
+        }
+
+    } catch (error) {
+        console.error("Error sending verification code:", error);
+        alert("Network error. Could not connect to verification service.");
+    }
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auction Detail Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="productpage.css">
+     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Extra style for disabled button */
+        button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+        .pop-out-button {
+  padding: 12px 24px;         /* Adjust padding as needed */
+  border-radius: 50px;        /* Makes it fully rounded */
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+ /* Example background color */
+  cursor: pointer;
+  
+  /* --- This is the secret sauce --- */
+  /* Tells the browser to animate changes to 'transform' and 'box-shadow' */
+  /* It takes 0.3 seconds and has an 'ease' effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* 2. The :hover state (when the mouse is over it) */
+.pop-out-button:hover {
+  /* Scales the button to 110% of its original size */
+  transform: scale(1.1); 
+   transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 6px 20px rgba(238, 115, 115, 0.6);
+}
+/* 1. Define the continuous "pulse" animation
+*/
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05); /* A subtle 5% grow */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+#product-image{
+    width: 100%;
+}    </style>
+</head>
+<body class="bg-gray-50">
+
+    
+    <div class="container header-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <p>WedRentify</p>
+            </div>
+            <!-- <ul class="nav-menu">
+            <li><a href="index.html">Home</a>
+            </li>
+            <li><a href="Men.html">Men</a>
+            </li>
+            <li><a href="Women.html">Women</a>
+            </li>
+            <li><a href="Venue.html">Venues</a>
+            </li>
+            <li><a href="Auction.html">Auction</a>
+            </li>
+            <li><a href="contact-us.html">Contact Us</a>
+            </li>
+        </ul> -->
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- <a class="navbar-brand" href="#">My Website</a> -->
+
+                    <!-- Toggle button (only visible on mobile) -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Normal desktop menu -->
+                    <div class=" navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        <ul class="navbar-nav  nav-menu">
+                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offcanvas for mobile -->
+                    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav mr-auto nav-menu">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="nav-login-cart">
+                <a href="login.html"><button id="loginLogoutBtn">Login</button></a>
+                <a href="cart.html"></a>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto py-10 px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <div>
+            <img id="product-image" class="rounded-lg shadow-md" alt="Loading Dress Image..." 
+                 src="https://placehold.co/600x800/eeeeee/aaaaaa?text=Loading..." />
+        </div>
+
+        <div>
+            <h2 id="product-title" class="text-3xl font-semibold text-gray-800 mb-2">Loading...</h2>
+            
+            <p class="text-lg text-gray-600 mb-2">
+                <strong>Condition:</strong> <span id="product-condition">...</span>
+            </p>
+            <p class="text-lg text-gray-600 mb-4">
+                <strong>Color:</strong> <span id="product-color">...</span>
+            </p>
+            <p class="text-lg text-gray-600 mb-4">
+                <strong>fabric:</strong> <span id="product-fabric">...</span>
+            </p>
+            <p class="text-2xl text-red-700 font-bold mb-6">
+                <strong>Original Price:</strong> Rs <span id="product-original-price">...</span>
+            </p>
+            <p class="text-3xl text-green-600 font-bold mb-6">
+                <strong>Current Bid:</strong> Rs <span id="product-current-bid">0</span>
+            </p>
+            <p class="text-xl text-gray-800 mb-6">
+                <strong>Highest Bidder:</strong> <span id="product-highest-bidder">No Bids Yet</span>
+            </p>
+
+            <div id="countdown-timer-container" class="bg-red-700 text-white text-2xl font-bold text-center p-4 rounded-lg mb-6">
+                ⏱️ Time Left: <span id="countdown-timer">Calculating...</span>
+            </div>
+
+            <section class="max-w-6xl mx-auto py-8 px-4 bg-white rounded-lg shadow mt-10">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Place Your Bid</h3>
+                
+                <form id="bid-form" class="space-y-4">
+                    
+                    <div class="border-b pb-4 mb-4">
+                        <p class="text-gray-700"><strong>Seller:</strong> <span id="seller-username">...</span></p>
+                        <p class="text-gray-700"><strong>Seller Contact:</strong> <span id="seller-contact">...</span></p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Your Username (Logged In)</label>
+                        <input type="text" id="buyer-username" required 
+                               class="mt-1 w-full border border-gray-300 rounded p-2 bg-gray-100" 
+                               readonly />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Your Contact Number</label>
+                        <input type="tel" id="buyer-contact" required 
+                               placeholder="e.g., 03001234567"
+                               class="mt-1 w-full border border-gray-300 rounded p-2" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Your Bid Price (PKR)</label>
+                        <input type="number" id="bid-price" required 
+                               placeholder="Must be higher than current bid"
+                               class="mt-1 w-full border border-gray-300 rounded p-2" />
+                    </div>
+
+                    <button type="submit" id="bid-submit-btn"
+                            class="w-full bg-red-700 text-white px-6 py-3 rounded-lg hover:bg-red-800 transition">
+                        Place Bid Now
+                    </button>
+                    <p id="bid-status" class="text-center text-red-500 mt-2"></p>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <div id="winner-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md text-center">
+            <h3 class="text-3xl font-bold mb-4 text-green-600">🎉 Congratulations! You Won! 🎉</h3>
+            <p class="text-lg text-gray-700 mb-4">You are the highest bidder for the <strong id="winner-dress-name">...</strong>.</p>
+            <p class="text-lg text-gray-700 mb-6">Please contact the seller to complete your purchase:</p>
+            <div class="bg-gray-100 p-4 rounded-lg">
+                <p class="text-xl"><strong>Seller:</strong> <span id="winner-seller-name">...</span></p>
+                <p class="text-xl"><strong>Contact:</strong> <span id="winner-seller-contact">...</span></p>
+            </div>
+            <button id="close-winner-modal" class="mt-6 w-full bg-red-700 text-white px-6 py-3 rounded-lg hover:bg-red-800">Close</button>
+        </div>
+    </div>
+
+ <footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+     
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // --- Configuration ---
+        // *** FIX: Base URL ab sirf .../auction/ hai ***
+        const API_BASE_URL = 'http://127.0.0.1:8000/api/auction/';
+        // *** FIX: Hum 'list' API ko call karke data dhoondenge ***
+        const AUCTION_LIST_API = `${API_BASE_URL}list/`; 
+       const PLACE_BID_API = 'http://127.0.0.1:8000/api/bid/'; // Yeh POST ke liye hai (Next step)
+
+        // Polling time (har 10 sec mein refresh)
+        const REFRESH_INTERVAL = 10000; // 10 seconds
+
+        // --- DOM Elements ---
+        const page = {
+            // Dress Info
+            image: document.getElementById('product-image'),
+            title: document.getElementById('product-title'),
+            condition: document.getElementById('product-condition'),
+            color: document.getElementById('product-color'),
+             fabric: document.getElementById('product-fabric'),
+            originalPrice: document.getElementById('product-original-price'),
+            currentBid: document.getElementById('product-current-bid'),
+            highestBidder: document.getElementById('product-highest-bidder'),
+            
+            // Timer
+            timerContainer: document.getElementById('countdown-timer-container'),
+            timerDisplay: document.getElementById('countdown-timer'),
+
+            // Bidding Form
+            bidForm: document.getElementById('bid-form'),
+            sellerUsername: document.getElementById('seller-username'),
+            sellerContact: document.getElementById('seller-contact'),
+            buyerUsernameInput: document.getElementById('buyer-username'),
+            buyerContactInput: document.getElementById('buyer-contact'),
+            bidPriceInput: document.getElementById('bid-price'),
+            bidSubmitBtn: document.getElementById('bid-submit-btn'),
+            bidStatus: document.getElementById('bid-status'),
+
+            // Winner Modal
+            winnerModal: document.getElementById('winner-modal'),
+            winnerDressName: document.getElementById('winner-dress-name'),
+            winnerSellerName: document.getElementById('winner-seller-name'),
+            winnerSellerContact: document.getElementById('winner-seller-contact'),
+            closeWinnerModalBtn: document.getElementById('close-winner-modal'),
+            
+            // Login Button
+            loginLogoutBtn: document.getElementById('loginLogoutBtn')
+        };
+
+        // --- Global State ---
+        let currentDressId = null;
+        let buyerUsername = null;
+        let activeCountdownTimer = null; // To store the interval
+        let dataPoller = null; // To store the 10-sec refresh timer
+
+        /**
+         * Main function: Loads when the page opens
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Check Login
+            buyerUsername = localStorage.getItem("buyer_username");
+            if (!buyerUsername) {
+                alert("You must be logged in to view this page.");
+                window.location.href = "login.html";
+                return;
+            }
+            
+            // Set logged-in username in the form
+            page.buyerUsernameInput.value = buyerUsername;
+            setupLoginButton(); // Setup login/logout button
+
+            // 2. Get Dress ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            currentDressId = urlParams.get('id'); // Yeh "5" hoga
+
+            if (!currentDressId) {
+                alert("No product selected.");
+                window.location.href = "Auction.html";
+                return;
+            }
+
+            // 3. Initial data fetch
+            fetchAuctionDetails();
+
+            // 4. Start 10-second "Polling" (jaisa aapne suggest kiya)
+            dataPoller = setInterval(fetchAuctionDetails, REFRESH_INTERVAL);
+
+            // 5. Add form submit listener
+            page.bidForm.addEventListener('submit', handleBidSubmit);
+            
+            // 6. Winner modal close button
+            page.closeWinnerModalBtn.onclick = () => page.winnerModal.classList.add('hidden');
+        });
+
+        /**
+         * *** MAJOR FIX: Ab yeh List API se data fetch karke ID dhoondega ***
+         */
+        async function fetchAuctionDetails() {
+            if (!currentDressId) return;
+
+            try {
+                // 1. List API ko call karein (jaisa Auction.html par kiya tha)
+                const response = await fetch(`${AUCTION_LIST_API}?_=${new Date().getTime()}`);
+                
+                if (!response.ok) {
+                    throw new Error("Failed to fetch auction list from server.");
+                }
+                
+                const data = await response.json(); // Ismein 'auctions' array hoga
+
+                // 2. Check karein ke 'auctions' array maujood hai
+                if (!data.auctions || !Array.isArray(data.auctions)) {
+                     throw new Error("Invalid API response structure.");
+                }
+
+                // 3. Array mein se apni ID wala dress dhoondein (e.g., id == 5)
+                // Note: currentDressId string hota hai, auction.id number ho sakta hai, isliye == use kiya
+                const specificAuction = data.auctions.find(auction => auction.id == currentDressId);
+
+                // 4. Check karein ke dress mila ya nahi
+                if (!specificAuction) {
+                    throw new Error(`Auction item with ID ${currentDressId} not found or has expired.`);
+                }
+
+                // 5. Agar mil gaya, toh page update karein
+                updatePageContent(specificAuction);
+                manageCountdownTimer(specificAuction.deletion_time, specificAuction);
+
+            } catch (error) {
+                console.error('Failed to fetch details:', error);
+                page.title.textContent = "Error";
+                page.bidStatus.textContent = error.message;
+                // Agar error aaye toh polling rok dein
+                if (dataPoller) clearInterval(dataPoller); 
+                disableBidding(error.message); // Form ko disable kar dein
+            }
+        }
+
+        /**
+         * Updates all the text and images on the page
+         * *** FIX: Fields ko aapki API ke mutabiq update kiya hai ***
+         */
+        function updatePageContent(data) {
+            page.image.src = data.dress_image_url || 'https://placehold.co/600x800/e91e63/ffffff?text=Image+Missing';
+            page.title.textContent = data.dress_name;
+            
+            // Screenshot ke mutabiq fields
+            page.condition.textContent = data.dress_condition || 'N/A'; // Use dress_condition
+            page.color.textContent = data.dress_color || 'N/A'; // Use dress_fabric for color
+             page.fabric.textContent = data.dress_fabric || 'N/A';
+            page.originalPrice.textContent = (data.orginalprice || 0).toLocaleString(); // Use orginalprice
+
+            // Yeh fields hum assume kar rahe hain API mein hongi (jaisa Auction.html mein tha)
+            page.currentBid.textContent = (data.current_bid || 0).toLocaleString();
+            page.highestBidder.textContent = data.highest_bidder || 'No Bids Yet';
+
+            page.sellerUsername.textContent = data.seller_username;
+            page.sellerContact.textContent = data.seller_contact;
+
+            // Set minimum bid in placeholder
+            const minBid = (data.current_bid || 0) + 1;
+            page.bidPriceInput.placeholder = `Must be Rs ${minBid.toLocaleString()} or more`;
+            page.bidPriceInput.min = minBid;
+        }
+
+        /**
+         * Handles the countdown timer logic (No Change Here)
+         */
+        function manageCountdownTimer(deletionTimeString, auctionData) {
+            // Clear existing timer
+            if (activeCountdownTimer) clearInterval(activeCountdownTimer);
+
+            const now = new Date();
+            const deletionTime = new Date(deletionTimeString);
+            let timeLeftMs = deletionTime.getTime() - now.getTime();
+
+            if (timeLeftMs <= 0) {
+                // Auction has ENDED
+                page.timerDisplay.textContent = "EXPIRED";
+                page.timerContainer.style.backgroundColor = '#555'; // Gray out
+                disableBidding("Auction has ended.");
+                checkWinner(auctionData);
+                if (dataPoller) clearInterval(dataPoller);
+                return;
+            }
+
+            const updateTimer = () => {
+                if (timeLeftMs <= 0) {
+                    clearInterval(activeCountdownTimer);
+                    page.timerDisplay.textContent = "EXPIRED";
+                    disableBidding("Auction has ended.");
+                    checkWinner(auctionData); // Final check
+                    if (dataPoller) clearInterval(dataPoller);
+                    return;
+                }
+
+                let seconds = Math.floor((timeLeftMs / 1000) % 60);
+                let minutes = Math.floor((timeLeftMs / (1000 * 60)) % 60);
+                let hours = Math.floor((timeLeftMs / (1000 * 60 * 60)));
+
+                const pad = (n) => n.toString().padStart(2, '0');
+                page.timerDisplay.textContent = `${pad(hours)}h : ${pad(minutes)}m : ${pad(seconds)}s`;
+
+                timeLeftMs -= 1000;
+            };
+
+            updateTimer(); // Run once immediately
+            activeCountdownTimer = setInterval(updateTimer, 1000);
+        }
+
+        /**
+         * Handles the bid form submission (No Change Here)
+         */
+        async function handleBidSubmit(event) {
+            event.preventDefault(); // Stop page from reloading
+            page.bidStatus.textContent = "";
+            page.bidSubmitBtn.disabled = true;
+            page.bidSubmitBtn.textContent = "Submitting...";
+
+            const bidData = {
+                dress_id: currentDressId,
+                buyer_username: buyerUsername,
+                contact_number: page.buyerContactInput.value,
+                bid_price: parseInt(page.bidPriceInput.value, 10)
+            };
+
+            // Basic validation
+            if (!bidData.contact_number || !bidData.bid_price) {
+                page.bidStatus.textContent = "Please fill all fields.";
+                page.bidSubmitBtn.disabled = false;
+                page.bidSubmitBtn.textContent = "Place Bid Now";
+                return;
+            }
+
+            try {
+                const response = await fetch(PLACE_BID_API, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bidData)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || "Failed to place bid.");
+                }
+
+                // SUCCESS!
+                page.bidStatus.textContent = "Bid placed successfully! Refreshing...";
+                page.bidPriceInput.value = ""; // Clear input
+                
+                // Immediately refresh data instead of waiting 10 sec
+                fetchAuctionDetails(); 
+                
+            } catch (error) {
+                page.bidStatus.textContent = error.message;
+            } finally {
+                // Re-enable button after 1 second
+                setTimeout(() => {
+                    page.bidSubmitBtn.disabled = false;
+                    page.bidSubmitBtn.textContent = "Place Bid Now";
+                }, 1000);
+            }
+        }
+
+        /**
+         * Disables the bidding form (No Change Here)
+         */
+        function disableBidding(message) {
+            page.bidPriceInput.disabled = true;
+            page.buyerContactInput.disabled = true;
+            page.bidSubmitBtn.disabled = true;
+            page.bidSubmitBtn.textContent = message;
+            page.bidStatus.textContent = message;
+        }
+
+        /**
+         * Checks if the logged-in user is the winner and shows popup (No Change Here)
+         */
+        function checkWinner(auctionData) {
+            if (auctionData.highest_bidder && auctionData.highest_bidder === buyerUsername) {
+                page.winnerDressName.textContent = auctionData.dress_name;
+                page.winnerSellerName.textContent = auctionData.seller_username;
+                page.winnerSellerContact.textContent = auctionData.seller_contact;
+                page.winnerModal.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Manages the top-right Login/Logout button
+         * *** FIX: Aapki logout logic mein choti si ghalti thi, setItem ki ***
+         */
+        function setupLoginButton() {
+            if (buyerUsername) {
+                page.loginLogoutBtn.textContent = 'Logout';
+                page.loginLogoutBtn.onclick = () => {
+                    localStorage.removeItem("buyer_username");
+                    localStorage.removeItem("buyer_id");
+                    // FIX: Is tarah set karte hain
+                    localStorage.setItem("isLoggedIn", "false"); 
+                    window.location.href = 'index.html';
+                };
+            } else {
+                page.loginLogoutBtn.textContent = 'Login';
+                page.loginLogoutBtn.onclick = () => window.location.href = 'login.html';
+            }
+        }
+    </script>
+    
+    </body>
+</html>

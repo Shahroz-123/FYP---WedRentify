@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us | WedRentify</title>
+  <link rel="stylesheet" href="contact-us.css">
+  <link rel="stylesheet" href="style.css">
+  <style>/* === STEP 2: YEH CSS CODE PASTE KAREIN === */
+
+/* --- POPUP / MODAL STYLES --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; /* Shuru mein hidden rehta hai */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+}
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #888;
+}
+.modal-content h3 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #8B1A1A;
+}
+#complaintsList {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+#complaintsList li {
+    padding: 12px 5px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+}
+#complaintsList li:last-child {
+    border-bottom: none;
+}
+.status-pending { color: #d97706; font-weight: bold; }
+.status-resolved { color: #16a34a; font-weight: bold; }
+.status-in-progress { color: #2563eb; font-weight: bold; } /* In Progress ke liye naya style */
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}</style>
+</head>
+<body>
+  <div class="contact-container">
+    <h1>Contact Us</h1>
+    <p class="email">📧 Email: <a href="mailto:support@wedrentify.pk">support@wedrentify.pk</a></p>
+
+    <div class="complaint-section">
+      <h2>Complaint Form</h2>
+      <form id="complaintForm">
+        <fieldset>
+          <legend>Type of Dispute:</legend>
+          <label><input type="checkbox" name="dispute" value="Rental"> Rental</label>
+          <label><input type="checkbox" name="dispute" value="Auction"> Auction</label>
+          <label><input type="checkbox" name="dispute" value="Payment"> Payment & Security</label>
+  
+        </fieldset>
+
+        <fieldset>
+          <legend>Your Role:</legend>
+          <label><input type="checkbox" name="role" value="Seller"> Seller</label>
+          <label><input type="checkbox" name="role" value="Buyer"> Buyer</label>
+        </fieldset>
+
+        <input type="text" name="username" placeholder="Your Username" required>
+      
+        <input type="text" name="cnic" placeholder="CNIC" required>
+        <input type="text" name="phone" placeholder="Phone Number" required>
+        <input type="text" name="name" placeholder="Your Full Name" required>
+
+        <h3>Optional: Complaint Against Specific User</h3>
+        <input type="text" name="againstUsername" placeholder="Username (Optional)">
+        <input type="text" name="againstContact" placeholder="Contact Number (Optional)">
+
+        <textarea name="details" placeholder="Write your complaint here..." rows="5" required></textarea>
+
+        <button type="submit" class="pop-out-button">Submit Complaint</button>
+      </form>
+    </div>
+    <div class="back-home-container">
+        <a href="index.html" class="back-home-btn  pop-out-button">← Back to Home</a>
+      </div>
+      
+  </div>
+  <!-- === STEP 1: YEH HTML CODE PASTE KAREIN === -->
+
+<!-- Hidden Popup Modal -->
+<div id="complaintsModal" class="modal-overlay">
+    <div class="modal-content">
+        <button id="closeModalBtn" class="modal-close-btn">&times;</button>
+        <h3>Your Complaint History</h3>
+        <ul id="complaintsList">
+            <!-- Complaint items will be added here by JavaScript -->
+        </ul>
+    </div>
+</div>
+<footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+     
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+  <script>
+ // Is pooray code ko apne puranay <script> tag ki jagah paste karein
+
+document.getElementById("complaintForm").addEventListener("submit", async function(e) {
+    // Page ko reload hone se rokein
+    e.preventDefault(); 
+    
+    // Form se saara data get karein
+    const form = e.target;
+    const formData = new FormData(form);
+
+    // Checkboxes se multiple values get karein
+    const disputeTypes = formData.getAll('dispute');
+    const userRoles = formData.getAll('role');
+    
+    // Saaray data ko ek JavaScript object mein daalein
+    const dataToSend = {
+        dispute: disputeTypes,
+        role: userRoles,
+        username: formData.get('username'),
+        cnic: formData.get('cnic'),
+        phone: formData.get('phone'),
+        name: formData.get('name'),
+        againstUsername: formData.get('againstUsername'),
+        againstContact: formData.get('againstContact'),
+        details: formData.get('details')
+    };
+
+    try {
+        // API ko POST request bhejein
+        const response = await fetch('http://127.0.0.1:8000/api/wedrentify_admin/submit-complaint/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Agar CSRF token ki zaroorat ho, to usay yahan add karein
+            },
+            body: JSON.stringify(dataToSend) // Object ko JSON string mein badlein
+        });
+
+        // Response ko JSON mein parse karein
+        const result = await response.json();
+
+        // Check karein ke request kamiyab (successful) hui ya nahi
+        if (response.ok) {
+            alert("Success: " + result.message);
+            showMyComplaints() 
+            form.reset(); // Form ko khali kar dein
+        } else {
+            // Agar server se error aaye to usay dikhayein
+            alert("Error: " + (result.error || "Something went wrong."));
+        }
+
+    } catch (error) {
+        // Agar network ya koi aur error ho to usay dikhayein
+        console.error("Submission failed:", error);
+        alert("Could not submit the form. Please check your network connection or contact support.");
+    }
+});
+// === STEP 3: YEH JAVASCRIPT CODE PASTE KAREIN ===
+
+const modal = document.getElementById('complaintsModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const complaintsList = document.getElementById('complaintsList');
+
+
+
+
+async function showMyComplaints() {
+    // Get the username from localStorage as requested
+    const username = localStorage.getItem('buyer_username'); 
+
+    if (!username) {
+        alert('Please log in to view your complaints.');
+        return;
+    }
+
+    complaintsList.innerHTML = '<li>Loading...</li>';
+    modal.style.display = 'flex'; // Show the popup
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/wedrentify_admin/disputes/');
+        if(!response.ok) throw new Error('Failed to fetch complaints.');
+
+        const allComplaints = await response.json();
+        
+        // Filter complaints for the logged-in user
+        const userComplaints = allComplaints.filter(c => c.username === username);
+
+        if (userComplaints.length === 0) {
+            complaintsList.innerHTML = '<li>You have not submitted any complaints yet.</li>';
+            return;
+        }
+
+        // Find the latest complaint by sorting by complaint_number in descending order
+        const latestComplaint = userComplaints.sort((a, b) => b.complaint_number - a.complaint_number)[0];
+
+        // Display only the latest complaint with the requested message
+        complaintsList.innerHTML = `
+            <li>
+                <span>Your latest complaint number is #${latestComplaint.complaint_number} plz remember complain number</span>
+                <span class="status-${latestComplaint.status.toLowerCase().replace(' ', '-')}">${latestComplaint.status}</span>
+            </li>
+        `;
+
+    } catch (error) {
+        console.error('Error fetching complaints:', error);
+        complaintsList.innerHTML = '<li>Could not load your complaints at the moment.</li>';
+    }
+}
+
+
+
+// Popup ko band (close) karne ka logic
+closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Agar user popup ke bahar (dark area par) click kare to bhi band ho jaye
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+  </script>
+</body>
+</html>

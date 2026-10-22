@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f4f4f4;
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  :root {
+    --primary: #d62828; /* WedRentify red-pink */
+    --secondary: #fff0f4; /* Light soft background */
+    --dark-text: #333333;
+    --white: #ffffff;
+    --hover: #b71c1c;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  th {
+    background-color: #d32f2f;
+    color: white;
+  }
+  input[type="text"] {
+    padding: 8px;
+    width: 200px;
+    margin-right: 10px;
+  }
+  .add-section, .search-section, .dropdown-section {
+    margin: 20px 0;
+    text-align: center;
+  }
+  .add-btn, .remove-btn {
+    background-color: #d32f2f;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .add-btn:hover, .remove-btn:hover {
+    background-color: #b71c1c;
+  }
+  .status-box {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e9f7ef;
+    border: 1px solid #b2dfdb;
+    border-radius: 4px;
+  }
+  
+  .note {
+    font-size: 0.9em;
+    color: #777;
+  }
+  .back-home {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .back-home button {
+    padding: 12px 30px;
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .back-home button:hover {
+    background-color: var(--hover);
+  }

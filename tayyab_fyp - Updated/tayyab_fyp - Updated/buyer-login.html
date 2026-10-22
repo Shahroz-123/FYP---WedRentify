@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buyer Login - WedRentify</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <div class="login-container login-page-container">
+    <h1 style="color: #b91c1c;;">Buyer Login</h1>
+    <form id="buyerLoginForm">
+      <input type="text" class="form-input" id="username" placeholder="Username" required><br><br>
+      <input type="password" class="form-input" id="password" placeholder="Password" required><br><br>
+      <button type="submit"class="login-btn seller login-btn" >Login</button>
+    </form>
+    <p class="back-home"><a href="login.html" class="home-btn">← Back</a></p>
+  </div>
+
+  <script>
+    document.getElementById("buyerLoginForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value; 
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/accounts/buyer/login/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+      
+           localStorage.setItem("buyer_id", data.id);   // store buyer id
+          localStorage.setItem("buyer_username", username);  // optional: store username
+           localStorage.setItem("isLoggedIn", "true");
+          // 🔹 yahan tum future mein token/session save kar sakte ho
+          window.location.href = "index.html"; 
+        } else {
+          alert("Login failed: " + (data.error || "Invalid credentials"));
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Something went wrong. Please try again.");
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+  :root {
+    --primary: #d62828; /* WedRentify red-pink */
+    --secondary: #fff0f4; /* Light soft background */
+    --dark-text: #333333;
+    --white: #ffffff;
+    --hover: #b71c1c;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+  
+  .back-home {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .back-home button {
+    padding: 12px 30px;
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .back-home button:hover {
+    background-color: var(--hover);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  h2 {
+    color: #b71c1c;
+  }
+  
+  .form-section input {
+    padding: 10px;
+    margin: 8px 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    background-color: #b71c1c;
+    color: white;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #931515;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+  }
+  
+  th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #b71c1c;
+    color: white;
+  }
+  

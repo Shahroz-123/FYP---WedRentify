@@ -1,0 +1,133 @@
+body {
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ffe6f0, #f2f2f2);
+    margin: 0;
+    padding: 0;
+  }
+  
+  .contact-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .contact-container h1 {
+    text-align: center;
+     color: #e91e63;
+    margin-bottom: 10px;
+  }
+  
+  .contact-container .email {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  
+  .contact-container .email a {
+    color: #b91c1c;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .complaint-section h2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  form fieldset {
+    border: none;
+    margin-bottom: 15px;
+  }
+  
+  form legend {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  form label {
+    display: block;
+    margin: 5px 0;
+    font-size: 15px;
+  }
+  
+  form input[type="text"],
+  form input[type="password"],
+  form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+  
+  form textarea {
+    resize: vertical;
+  }
+  
+  form button {
+    padding: 12px;
+    
+    background-color: #ff4081;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  form button:hover {
+       background-color: #e91e63;
+  }
+  .back-home-container {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .back-home-btn {
+    display: inline-block;
+    padding: 10px 20px;
+       background-color: #ff4081;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-home-btn:hover {
+        background-color: #e91e63;
+  }
+  .pop-out-button {
+  padding: 12px 24px;         /* Adjust padding as needed */
+  border-radius: 50px;        /* Makes it fully rounded */
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+ /* Example background color */
+  cursor: pointer;
+  
+  /* --- This is the secret sauce --- */
+  /* Tells the browser to animate changes to 'transform' and 'box-shadow' */
+  /* It takes 0.3 seconds and has an 'ease' effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* 2. The :hover state (when the mouse is over it) */
+.pop-out-button:hover {
+  /* Scales the button to 110% of its original size */
+  transform: scale(1.1); 
+   transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 6px 20px rgba(238, 115, 115, 0.6);
+}

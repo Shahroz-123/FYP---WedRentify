@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Seller Dashboard</title>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="flex items-center justify-between px-4 md:px-8 border-b border-gray-500 py-3">
+    <a class="text-red-800 font-bold text-2xl" href="/">❤️ WedRentify</a>
+
+    <div class="flex items-center gap-5 text-gray-500 relative">
+      <p id="sellerName">Hi! Seller</p>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+        stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 
+             2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 
+             0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 
+             9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+      </svg>
+
+      <button type="button"
+        class="text-red-600 border border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
+        onclick="logoutSeller()">Logout</button>
+    </div>
+  </div>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <div class="md:w-64 w-16 border-r min-h-screen text-base border-gray-500 py-2 flex flex-col">
+      <a href="SellerDashbord.html"
+        class="flex items-center md:flex-row flex-col md:justify-start justify-center py-3.5 md:px-10 gap-3 bg-red-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-4a2 2 0 01-2-2V12H9v8a2 2 0 01-2 2H5a2 2 0 01-2-2V10z" />
+        </svg>
+        <p class="md:block hidden text-center text-white">Dashboard</p>
+      </a>
+
+      <a href="SellerAddDresses.html"
+        class="flex items-center md:flex-row flex-col md:justify-start justify-center py-3.5 md:px-10 gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        <p class="md:block hidden text-center">Add Dresses</p>
+      </a>
+
+      <a href="SellerDresses.html"
+        class="flex items-center md:flex-row flex-col md:justify-start justify-center py-3.5 md:px-10 gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+        </svg>
+        <p class="md:block hidden text-center">My Dresses</p>
+      </a>
+
+      <a href="SellerBuyer.html"
+        class="flex items-center md:flex-row flex-col md:justify-start justify-center py-3.5 md:px-10 gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m5-3a4 4 0 100-8 4 4 0 000 8zm6 0a4 4 0 100-8 4 4 0 000 8z" />
+        </svg>
+        <p class="md:block hidden text-center">Buyer Enrolled</p>
+      </a>
+    </div>
+
+    <!-- Dashboard Main -->
+    <div class="flex-1">
+      <div class="min-h-screen flex flex-col items-start justify-between md:p-8 md:pb-0 p-4 pt-8 pb-0">
+        <div class="flex flex-col items-center max-w-4xl w-full overflow-hidden rounded-md bg-white border border-gray-500/20">
+          <table class="table-fixed md:table-auto w-full overflow-hidden pb-4">
+            <thead class="text-gray-900 border-b border-gray-500/20 text-sm text-left">
+              <tr>
+                <th class="px-4 py-3 font-semibold text-center hidden sm:table-cell">#</th>
+                <th class="px-4 py-3 font-semibold">Dress Title</th>
+                <th class="px-4 py-3 font-semibold">Color</th>
+                <th class="px-4 py-3 font-semibold">Price</th>
+                <th class="px-4 py-3 font-semibold hidden sm:table-cell">Size</th>
+                <th class="px-4 py-3 font-semibold hidden sm:table-cell">Length</th>
+                <th class="px-4 py-3 font-semibold hidden sm:table-cell">City</th>
+                <th class="px-4 py-3 font-semibold hidden sm:table-cell">Occasion</th>
+                <th class="px-4 py-3 font-semibold text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="dressesTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let sellerName = localStorage.getItem("sellerUsername");
+      if (!sellerName) {
+        sellerName = "Seller";
+      }
+      document.getElementById("sellerName").textContent = "Hi! " + sellerName;
+
+      // Load only seller’s dresses
+      loadDresses(sellerName);
+    });
+
+    async function loadDresses(sellerName) {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/rentals/list/");
+        const dresses = await res.json();
+
+        const tbody = document.getElementById("dressesTable");
+        tbody.innerHTML = "";
+
+        // Filter only current seller dresses
+        const filtered = dresses.filter(d => d.seller_username === sellerName);
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-gray-500">
+            No dresses found for <b>${sellerName}</b>.
+          </td></tr>`;
+          return;
+        }
+
+        filtered.forEach((dress, index) => {
+          const tr = document.createElement("tr");
+          tr.classList.add("border-b", "border-gray-500/20");
+          tr.innerHTML = `
+            <td class="px-4 py-3 text-center hidden sm:table-cell">${index + 1}</td>
+            <td class="md:px-4 px-2 py-3 flex items-center space-x-3">
+              <img src="${dress.image || 'https://via.placeholder.com/40'}" class="w-9 h-9 rounded-full"/>
+              <span class="truncate">${dress.name}</span>
+            </td>
+            <td class="px-4 py-3 truncate">${dress.color || "-"}</td>
+            <td class="px-4 py-3 truncate">${dress.rent_price}</td>
+            <td class="px-4 py-3 hidden sm:table-cell">${dress.size || "-"}</td>
+            <td class="px-4 py-3 hidden sm:table-cell">${dress.length || "-"}</td>
+            <td class="px-4 py-3 hidden sm:table-cell">${dress.city || "-"}</td>
+            <td class="px-4 py-3 hidden sm:table-cell">${dress.occasion || "-"}</td>
+            <td class="px-4 py-3 text-red-600 cursor-pointer text-center" onclick="deleteDress(${dress.id})">🗑 Delete</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function deleteDress(id) {
+      if (!confirm("Are you sure to delete this dress?")) return;
+      try {
+        const res = await fetch(`http://127.0.0.1:8000/api/rentals/delete/${id}/`, {
+          method: "DELETE"
+        });
+        const result = await res.json();
+        if (res.ok) {
+          alert("✅ " + result.message);
+          const sellerName = localStorage.getItem("sellerUsername");
+          loadDresses(sellerName);
+        } else {
+          alert("❌ Error: " + result.error);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function logoutSeller() {
+      localStorage.removeItem("sellerUsername");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - WedRentify</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        /* Custom styles for image preview in table */
+        .h-12 { height: 3rem; }
+        .w-12 { width: 3rem; }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+    <div class="flex items-center justify-between px-4 md:px-8 border-b border-gray-500 py-3 bg-white shadow-md">
+        <a class="text-red-800 font-bold text-2xl" href="/">❤️ WedRentify</a>
+
+        <div class="flex items-center gap-5 text-gray-700 relative">
+            <p id="sellerName">Hi! Seller</p>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+            <button 
+                class="text-red-600 border border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
+                onclick="logoutSeller()">Logout</button>
+        </div>
+    </div>
+
+    <div class="flex min-h-[calc(100vh-60px)]"> 
+        <div class="md:w-64 w-16 border-r border-gray-300 py-2 flex flex-col bg-white">
+            <a href="SellerDashbord.html" class="flex items-center py-3.5 px-5 bg-red-800 text-white gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-4a2 2 0 01-2-2V12H9v8a2 2 0 01-2 2H5a2 2 0 01-2-2V10z" />
+                </svg>
+                <p>Dashboard</p>
+            </a>
+            <a href="SellerAddDresses.html" class="flex items-center py-3.5 px-5 gap-3 hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <p>Add Dresses</p>
+            </a>
+            <a href="SellerDresses.html" class="flex items-center py-3.5 px-5 gap-3 hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+                <p>My Dresses</p>
+            </a>
+            <a href="SellerBuyer.html" class="flex items-center py-3.5 px-5 gap-3 hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m5-3a4 4 0 100-8 4 4 0 000 8zm6 0a4 4 0 100-8 4 4 0 000 8z" />
+                </svg>
+                <p>Buyers</p>
+            </a>
+        </div>
+
+        <div class="flex-1 p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-8">Dry Cleaner Recommendations</h1>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Recommended Cleaning Services</h2>
+                <table class="w-full table-auto border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 border-b text-left bg-gray-100">Dry Cleaner Name</th>
+                            <th class="px-4 py-2 border-b text-left bg-gray-100">Contact Number</th>
+                            <th class="px-4 py-2 border-b text-left bg-gray-100">Image</th>
+                        </tr>
+                    </thead>
+                    <tbody id="drycleaner-table-body">
+                        </tbody>
+                </table>
+                <p id="loading-message" class="text-gray-500 text-center py-4 hidden">Loading...</p>
+            </div>
+            
+        </div>
+    </div>
+    <script>
+        const API_BASE_URL = "http://127.0.0.1:8000/api/wedrentify_admin/drycleaners/";
+        const tableBody = document.getElementById('drycleaner-table-body');
+        const loadingMessage = document.getElementById('loading-message');
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            let sellerUsername = localStorage.getItem("sellerUsername");
+            if (!sellerUsername) {
+                alert("You must log in as a seller first!");
+                window.location.href = "login.html";
+                return;
+            }
+
+            document.getElementById("sellerName").textContent = "Hi! " + sellerUsername;
+            
+            // Load the Dry Cleaners Table
+            loadDryCleaners();
+        });
+
+        function logoutSeller() {
+            localStorage.removeItem("sellerUsername");
+            window.location.href = "login.html";
+        }
+
+        // --- Load Dry Cleaners into Table (GET Request) ---
+        async function loadDryCleaners() {
+            tableBody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-gray-500">Loading recommended cleaners...</td></tr>`;
+
+            try {
+                const response = await fetch(API_BASE_URL);
+                if (!response.ok) throw new Error('Failed to fetch data');
+
+                const cleaners = await response.json();
+                renderTable(cleaners);
+            } catch (error) {
+                console.error("Error loading dry cleaners:", error);
+                tableBody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-red-600">Failed to load data. Please check the API connection.</td></tr>`;
+            }
+        }
+
+        // --- Render Table Rows (No Delete Button) ---
+        function renderTable(cleaners) {
+            if (cleaners.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-gray-500">No cleaning services have been recommended yet.</td></tr>`;
+                return;
+            }
+
+            tableBody.innerHTML = cleaners.map(cleaner => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-4 py-3 border-b">${cleaner.name}</td>
+                    <td class="px-4 py-3 border-b">${cleaner.contact_number}</td>
+                    <td class="px-4 py-3 border-b">
+                        ${cleaner.image_url ? 
+                            `<img src="${cleaner.image_url}" alt="${cleaner.name} image" class="h-12 w-12 object-cover rounded-md">` : 
+                            '<span class="text-gray-400">No Image</span>'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Donations</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+ <style>
+/* Main Page Title Styling */
+h1.text-red-700 {
+    color: rgb(110, 25, 25)!important; /* Dark Maroon */
+    margin-top: 24px !important;
+    margin-bottom: 16px !important;
+    font-size: 2rem !important;
+}
+
+/* Main Card Container */
+#donationContainer {
+    /* Ensures cards are centered if there's extra space */
+    justify-content: center;
+}
+
+/* Individual Card Styling */
+#donationContainer > div {
+    /* Card Size & Layout */
+    max-width: 300px !important; /* Card ko chota banata hai */
+    width: 100%;
+    margin: 0 auto !important; /* Card ko apne column mein center karta hai */
+    
+    /* Card Appearance */
+    background-color: #ffffff !important;
+    border-radius: 20px !important; /* Gol corners */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #f3f4f6;
+    transition: all 0.3s ease !important;
+    
+    /* --- SAB SE ZAROORI PROPERTY --- */
+    /* Yeh image ko card ke andar rakhta hai aur corners ko round karta hai */
+    overflow: hidden !important; 
+}
+
+/* Card Hover Effect */
+#donationContainer > div:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Card Image Styling */
+#donationContainer img {
+    width: 100% !important;
+    height: 260px !important; /* Image ki height set karta hai */
+    
+    /* Yeh image ko distort kiye baghair fit karta hai */
+    object-fit: cover !important; 
+}
+
+/* Card Content Area (Text) */
+#donationContainer .p-4 {
+    padding: 24px !important;
+}
+
+/* Card Title */
+#donationContainer h2 {
+    color: #4A0E0E !important;
+    font-weight: 700 !important;
+    font-size: 1.4rem !important; /* Thora chota size */
+    margin-bottom: 12px !important;
+    line-height: 1.2; /* Line height theek karta hai */
+    min-height: 54px; /* Ensures consistent height for 1 or 2 line titles */
+}
+
+/* Card Details (Size, Donor, etc.) */
+#donationContainer p {
+    color: #4b5563 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 4px !important;
+}
+
+#donationContainer p strong {
+    color: #1f2937 !important;
+    font-weight: 600 !important;
+}
+
+/* Description Text */
+#donationContainer .p-4 p:nth-of-type(1) {
+    color: #6b7280 !important;
+    margin-bottom: 16px !important;
+    min-height: 40px; /* Consistent height for description */
+}
+
+/* WhatsApp Button */
+#donationContainer button {
+    background-color: #8B1A1A !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 12px 20px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    width: 100%;
+    
+    /* For Icon Alignment */
+    position: relative;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    padding-left: 45px !important; 
+}
+
+/* WhatsApp Icon using SVG */
+#donationContainer button::before {
+    content: '';
+    position: absolute;
+    left: 20px; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Button Hover Effect */
+#donationContainer button:hover {
+    background-color: #6b0f0f !important;
+    transform: scale(1.03);
+}
+.pop-out-button {
+  padding: 12px 24px;         /* Adjust padding as needed */
+  border-radius: 50px;        /* Makes it fully rounded */
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+ /* Example background color */
+  cursor: pointer;
+  
+  /* --- This is the secret sauce --- */
+  /* Tells the browser to animate changes to 'transform' and 'box-shadow' */
+  /* It takes 0.3 seconds and has an 'ease' effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* 2. The :hover state (when the mouse is over it) */
+.pop-out-button:hover {
+  /* Scales the button to 110% of its original size */
+  transform: scale(1.1); 
+   transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 6px 20px rgba(238, 115, 115, 0.6);
+}
+/* 1. Define the continuous "pulse" animation
+*/
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05); /* A subtle 5% grow */
+  }
+  100% {
+    transform: scale(1);
+  }
+}</style>
+</head>
+<body class="bg-gray-150">
+    <div class="container header-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <p>WedRentify</p>
+            </div>
+            <!-- <ul class="nav-menu">
+            <li><a href="index.html">Home</a>
+            </li>
+            <li><a href="Men.html">Men</a>
+            </li>
+            <li><a href="Women.html">Women</a>
+            </li>
+            <li><a href="Venue.html">Venues</a>
+            </li>
+            <li><a href="Auction.html">Auction</a>
+            </li>
+            <li><a href="contact-us.html">Contact Us</a>
+            </li>
+        </ul> -->
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- <a class="navbar-brand" href="#">My Website</a> -->
+
+                    <!-- Toggle button (only visible on mobile) -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Normal desktop menu -->
+                    <div class="collapse navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto nav-menu">
+                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offcanvas for mobile -->
+                    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav mr-auto nav-menu">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="nav-login-cart">
+                <a href="login.html"><button>Login</button></a>
+                <a href="cart.html"></a>
+            </div>
+        </div>
+    </div>
+
+  <h1 class="text-center text-3xl font-bold text-red-700 mt-6">All Donations </h1>
+
+  <div id="donationContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6"></div>
+
+  <!-- Pagination Controls -->
+  <div class="flex justify-center items-center gap-4 my-6 pagination">
+    <button id="prevBtn" class=" pop-out-button   bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800 transition disabled:opacity-50" >Previous</button>
+    <span id="pageInfo" class="text-gray-800 font-medium"></span>
+    <button id="nextBtn" class="pop-out-button bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800 transition disabled:opacity-50">Next</button>
+  </div>
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+     
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+  <script>
+  const container = document.getElementById("donationContainer");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const pageInfo = document.getElementById("pageInfo");
+
+  let donations = [];
+  let currentPage = 1;
+  const itemsPerPage = 8;
+
+  async function loadDonations() {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/donations/list/");
+      donations = await res.json();
+
+      if (donations.length === 0) {
+        container.innerHTML = `<p class='col-span-full text-center text-gray-600'>No donations available yet.</p>`;
+        return;
+      }
+
+      renderPage(currentPage);
+    } catch (err) {
+      console.error("Error loading donations:", err);
+      container.innerHTML = `<p class='col-span-full text-center text-red-600'>Failed to load donations.</p>`;
+    }
+  }
+
+  function renderPage(page) {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedItems = donations.slice(start, end);
+
+    container.innerHTML = paginatedItems.map(d => `
+      <div class="bg-white shadow-md rounded-md overflow-hidden hover:shadow-lg transition">
+        <img src="${d.dress_image ? d.dress_image : 'placeholder.jpg'}" class="h-64 w-full object-cover" alt="${d.dress_title}">
+        <div class="p-4">
+          <h2 class="text-lg font-semibold text-gray-800">${d.dress_title}</h2>
+          <p class="text-sm text-gray-700 "><strong>Desc:</strong> ${d.dress_description || 'No description available.'}</p>
+          <p class="text-sm text-gray-700"><strong>Size:</strong> ${d.dress_size || 'N/A'}</p>
+          <p class="text-sm text-gray-700"><strong>Donor:</strong> ${d.donor_name}</p>
+          <p class="text-sm text-gray-700"><strong>Contact:</strong> ${d.donor_contact}</p>
+          <button 
+        onclick="contactDonor('${d.donor_contact}', '${d.dress_title}', '${d.dress_image}')"
+
+            class="mt-3 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"> Contact
+          </button>
+        </div>
+      </div>
+    `).join("");
+
+    // Update pagination buttons
+    pageInfo.textContent = `Page ${page} of ${Math.ceil(donations.length / itemsPerPage)}`;
+    prevBtn.disabled = page === 1;
+    nextBtn.disabled = end >= donations.length;
+  }
+
+ function contactDonor(phone, dressTitle, dress_image) {
+  const formattedNumber = phone.replace(/[^0-9]/g, '');
+  const message = encodeURIComponent(
+    `Assalamualaikum! I'm interested in your donated dress: "${dressTitle}".\nYou uploaded it on WedRentify. Here is the image link:\n${dress_image}`
+  );
+  const whatsappUrl = `https://wa.me/${formattedNumber}?text=${message}`;
+  window.open(whatsappUrl, "_blank");
+}
+
+  prevBtn.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderPage(currentPage);
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    if ((currentPage * itemsPerPage) < donations.length) {
+      currentPage++;
+      renderPage(currentPage);
+    }
+  });
+
+  loadDonations();
+  document.addEventListener("DOMContentLoaded", function () {
+    const navLoginCart = document.querySelector(".nav-login-cart");
+
+    // Check login status from localStorage/sessionStorage
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+     
+    if (isLoggedIn === "true") {
+        // Show Logout Button
+        navLoginCart.innerHTML = `
+            <button id="logoutBtn">Logout</button>
+            <a href="cart.html"></a>
+        
+        `;
+
+        // Logout Event
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("isLoggedIn");
+             // Clear login status
+             localStorage.removeItem("buyer_id");
+             localStorage.removeItem("buyer_username");
+            window.location.href = "index.html"; // Redirect to login page
+        });
+    } else {
+        // Show Login Button
+        navLoginCart.innerHTML = `
+            <a href="login.html"><button>Login</button></a>
+            <a href="cart.html"><img src="cart.png" alt="Cart"></a>
+            <div class="nav-cart-count">0</div>
+        `;
+    }
+});
+  </script>
+</body>
+</html>

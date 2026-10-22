@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security Deposits | WedRentify Admin</title>
+    <style>
+        /* Base Styles - Using colors from your dispute page */
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px; }
+        .container { width: 95%; max-width: 1200px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        h2 { text-align: center; color: #8B1A1A; margin-bottom: 30px; font-size: 2rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border: 1px solid #eee; text-align: left; }
+        th { background: #8B1A1A; color: white; }
+        
+        /* Status/Action Button Styles */
+        .status-frozen { color: #ef4444; font-weight: bold; } /* Red for Frozen */
+        .status-unfrozen { color: #10b981; font-weight: bold; } /* Green for Unfrozen */
+
+        .action-btn { padding: 6px 12px; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: opacity 0.3s; width: 100px; }
+        .freeze-btn { background-color: #3b82f6; } /* Blue for Freeze */
+        .unfreeze-btn { background-color: #f59e0b; } /* Amber for Unfreeze */
+        .action-btn:hover { opacity: 0.8; }
+
+        .back-button { display: block; margin: 30px auto 0; padding: 12px 20px; background: #4b5563; color: white; border-radius: 8px; cursor: pointer; text-align: center; text-decoration: none; width: fit-content; }
+        .back-button:hover { background: #374151; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Security Deposits Management</h2>
+        
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Deposit ID</th>
+                        <th>Seller Username</th>
+                        <th>Dress ID</th>
+                        <th>Amount (Rs.)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="depositsTableBody">
+                    <tr><td colspan="6" style="text-align:center;">Loading deposits...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <a href="admin.html" class="back-button">← Back to Dashboard</a>
+    </div>
+
+    <script>
+        const API_DEPOSITS_URL = "http://127.0.0.1:8000/api/rentals/deposits";
+        const API_TOGGLE_URL = "http://127.0.0.1:8000/api/rentals/toggle_freeze_deposit"; 
+
+        document.addEventListener('DOMContentLoaded', loadDeposits);
+
+        // --- 1. Fetch and Render Deposits ---
+        async function loadDeposits() {
+            const tableBody = document.getElementById('depositsTableBody');
+            tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Loading deposits...</td></tr>`;
+
+            try {
+                const response = await fetch(API_DEPOSITS_URL + '/');
+                if (!response.ok) throw new Error('Failed to fetch deposits.');
+                
+                const deposits = await response.json();
+                renderTable(deposits);
+
+            } catch (error) {
+                console.error("Error loading deposits:", error);
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: red;">Failed to load data. Check console.</td></tr>`;
+            }
+        }
+
+        function renderTable(deposits) {
+            const tableBody = document.getElementById('depositsTableBody');
+            if (deposits.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No security deposits found.</td></tr>`;
+                return;
+            }
+
+            tableBody.innerHTML = deposits.map(d => {
+                const isFrozen = d.is_frozen;
+                const statusText = isFrozen ? 'Frozen' : 'Active';
+                const buttonText = isFrozen ? 'Unfreeze' : 'Freeze';
+                const buttonClass = isFrozen ? 'unfreeze-btn' : 'freeze-btn';
+                const statusClass = isFrozen ? 'status-frozen' : 'status-unfrozen';
+
+                return `
+                    <tr data-deposit-id="${d.id}">
+                        <td>#${d.id}</td>
+                        <td>${d.seller_username}</td>
+                        <td><a href="#" title="View Dress Details">${d.dress_id}</a></td>
+                        <td>Rs. ${d.amount.toFixed(2)}</td>
+                        <td class="${statusClass}" id="status-${d.id}">${statusText}</td>
+                        <td>
+                            <button 
+                                class="action-btn ${buttonClass}" 
+                                id="btn-${d.id}"
+                                onclick="toggleFreeze(${d.id})">
+                                ${buttonText}
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // --- 2. Toggle Freeze/Unfreeze Functionality ---
+        async function toggleFreeze(depositId) {
+            const button = document.getElementById(`btn-${depositId}`);
+            const statusCell = document.getElementById(`status-${depositId}`);
+            
+            const originalText = button.textContent;
+            button.textContent = '...';
+            button.disabled = true;
+
+            try {
+                // Use POST request as defined in Django view
+                const response = await fetch(`${API_TOGGLE_URL}/${depositId}/`, { method: 'POST' });
+
+                if (!response.ok) throw new Error('Toggle failed.');
+
+                const data = await response.json();
+                const newStatus = data.is_frozen;
+
+                // Update UI based on new status
+                if (newStatus) {
+                    // FROZEN
+                    button.textContent = 'Unfreeze';
+                    button.classList.remove('freeze-btn');
+                    button.classList.add('unfreeze-btn');
+                    statusCell.textContent = 'Frozen';
+                    statusCell.className = 'status-frozen';
+                    alert(`Deposit #${depositId} is now FROZEN.`);
+                } else {
+                    // ACTIVE/UNFROZEN
+                    button.textContent = 'Freeze';
+                    button.classList.remove('unfreeze-btn');
+                    button.classList.add('freeze-btn');
+                    statusCell.textContent = 'Active';
+                    statusCell.className = 'status-unfrozen';
+                    alert(`Deposit #${depositId} is now ACTIVE.`);
+                }
+
+            } catch (error) {
+                console.error("Error toggling freeze state:", error);
+                alert(`Failed to toggle status for deposit #${depositId}.`);
+                button.textContent = originalText;
+            } finally {
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

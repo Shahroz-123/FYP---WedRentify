@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dispute Management | WedRentify</title>
+  <style>
+    :root {
+      --primary: #d62828; /* WedRentify red-pink */
+      --secondary: #fff0f4; /* Light soft background */
+      --dark-text: #333333;
+      --white: #ffffff;
+      --hover: #b71c1c;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--secondary);
+    }
+
+    .navbar {
+      background-color: var(--primary);
+      padding: 16px 0;
+      text-align: center;
+    }
+
+    .navbar a {
+      color: var(--white);
+      text-decoration: none;
+      margin: 0 10px;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: var(--hover);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1000px;
+      margin: 40px auto;
+      background-color: var(--white);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--dark-text);
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .stat-box {
+      flex: 1;
+      min-width: 280px;
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: var(--shadow);
+    }
+
+    .back-home {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .back-home button {
+      padding: 12px 30px;
+      background-color: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .back-home button:hover {
+      background-color: var(--hover);
+    }
+
+    @media (max-width: 768px) {
+      .stats {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stat-box {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="renteddispute.html">Rental Disputes</a>
+    <a href="auctiondispute.html">Auction Disputes</a>
+    <a href="payment-securitydispute.html">Payment & Security Disputes</a>
+  </div>
+
+  <div class="container">
+    <h2>Dispute Management Dashboard</h2>
+
+    <div class="stats">
+      <div class="stat-box">Total Disputes: 0</div>
+      <div class="stat-box">Pending Disputes: 0</div>
+      <div class="stat-box">Resolved Disputes: 0</div>
+    </div>
+
+    <div class="back-home">
+      <button onclick="window.location.href='admin.html'">Back to Home</button>
+    </div>
+  </div>
+</body>
+<script>
+    const API_BASE_URL = "http://127.0.0.1:8000/api/wedrentify_admin/disputes";
+
+    /**
+     * Fetches dispute data, processes it for counts, and updates the dashboard.
+     */
+    async function loadDisputeStats() {
+        try {
+            const response = await fetch(API_BASE_URL);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // 1. Parse the response as an ARRAY of disputes
+            const disputes = await response.json(); 
+
+            // 2. Process the array to calculate the required counts
+            const totalDisputes = disputes.length;
+            let pendingDisputes = 0;
+            let resolvedDisputes = 0;
+            
+            disputes.forEach(dispute => {
+                // Check status (case-insensitive for robustness)
+                if (dispute.status && dispute.status.toLowerCase() === 'pending') {
+                    pendingDisputes++;
+                } else if (dispute.status && dispute.status.toLowerCase() === 'resolved') {
+                    resolvedDisputes++;
+                }
+                // Agar koi aur status ho toh use ignore kar denge, ya 'resolved' maan lenge agar 
+                // aapke backend mein sirf 'Pending' aur 'Resolved' hi statuses hain.
+            });
+
+
+            // 3. Get all stat boxes for updating
+            const statBoxes = document.querySelectorAll('.stat-box');
+
+            if (statBoxes.length >= 3) {
+                // Update Total Disputes (Index 0)
+                statBoxes[0].textContent = `Total Disputes: ${totalDisputes}`;
+                
+                // Update Pending Disputes (Index 1)
+                statBoxes[1].textContent = `Pending Disputes: ${pendingDisputes}`;
+                
+                // Update Resolved Disputes (Index 2)
+                statBoxes[2].textContent = `Resolved Disputes: ${resolvedDisputes}`;
+            } else {
+                console.error("Not enough '.stat-box' elements found in HTML.");
+            }
+
+        } catch (error) {
+            console.error("Error loading dispute statistics:", error);
+            document.querySelectorAll('.stat-box').forEach(box => {
+                box.textContent = "Error Loading Data";
+            });
+        }
+    }
+
+    // Call the function when the page loads
+    loadDisputeStats();
+</script>
+</html>

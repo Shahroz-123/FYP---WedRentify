@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Dashboard</title>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Navbar -->
+  <div class="flex items-center justify-between px-4 md:px-8 border-b border-gray-500 py-3">
+    <a class="text-red-800 font-bold text-2xl" href="/">
+      ❤️ WedRentify
+    </a>
+
+    <div class="flex items-center gap-5 text-gray-500 relative">
+      <p id="sellerName">Hi! Seller</p>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+        stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+      </svg>
+
+      <!-- Logout Button -->
+      <button 
+        type="button" 
+        class="text-red-600 border border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
+        onclick="logoutSeller()"
+      >Logout</button>
+    </div>
+  </div>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <div class="md:w-64 w-16 border-r min-h-screen text-base border-gray-500 flex flex-col">
+      <a href="SellerDashbord.html"
+        class="flex items-center md:flex-row flex-col md:justify-start justify-center py-3.5 md:px-10 gap-3 bg-red-800 text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-4a2 2 0 01-2-2V12H9v8a2 2 0 01-2 2H5a2 2 0 01-2-2V10z" />
+        </svg>
+        <p class="md:block hidden">Dashboard</p>
+      </a>
+
+      <a href="SellerAddDresses.html"
+        class="flex items-center md:flex-row flex-col md:justify-start justify-center py-3.5 md:px-10 gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        <p class="md:block hidden text-center">Add Dresses</p>
+      </a>
+
+      <a href="SellerDresses.html"
+        class="flex items-center md:flex-row flex-col md:justify-start justify-center py-3.5 md:px-10 gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+        </svg>
+        <p class="md:block hidden text-center">My Dresses</p>
+      </a>
+
+      <a href="SellerBuyer.html"
+        class="flex items-center md:flex-row flex-col md:justify-start justify-center py-3.5 md:px-10 gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m5-3a4 4 0 100-8 4 4 0 000 8zm6 0a4 4 0 100-8 4 4 0 000 8z" />
+        </svg>
+        <p class="md:block hidden text-center">Buyer Enrolled</p>
+      </a>
+    </div>
+    <!-- Main Content -->
+    <div class="flex-1">
+      <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-6 text-center text-red-700">Add New Dress</h1>
+
+        <!-- Tabs -->
+        <div class="mb-6 border-b border-gray-300 flex space-x-4">
+          <button class="tab-link border-b-2 border-black text-black font-semibold pb-2 px-4" onclick="openTab(event, 'rentForm')">Rent</button>
+          <button class="tab-link text-gray-500 pb-2 px-4" onclick="window.location.href='sellerauction.html'">Auction</button>
+        </div>
+<!-- rentForm -->
+       <form id="rentForm" class="tab-content block space-y-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <input type="text" name="name" placeholder="Enter Dress Title" required class="w-full p-2 border rounded">
+    <input type="number" name="rent_price" placeholder="Enter Price" required class="w-full p-2 border rounded">
+    <input type="text" name="city" placeholder="Enter City" required class="w-full p-2 border rounded">
+    <input type="text" name="category" placeholder="Enter Male or Female" required class="w-full p-2 border rounded">
+    <input type="text" name="occasion" placeholder="e.g. Wedding, Party" required class="w-full p-2 border rounded">
+    <input type="text" name="color" placeholder="Enter Color" required class="w-full p-2 border rounded">
+
+    <!-- ✅ New Contact Number Field -->
+    <input type="tel" name="contact_number" placeholder="Enter Contact Number" 
+           pattern="[0-9]{11}" maxlength="11" required 
+           class="w-full p-2 border rounded" 
+           title="Please enter 11-digit contact number">
+
+    <select name="length" required class="w-full p-2 border rounded">
+      <option value="">Select Length</option>
+      <option>Short</option>
+      <option>Midi</option>
+      <option>Long</option>
+    </select>
+
+    <select name="size" required class="w-full p-2 border rounded">
+      <option value="">Select Size</option>
+      <option>S</option>
+      <option>M</option>
+      <option>L</option>
+      <option>XL</option>
+      <option>XXL</option>
+    </select>
+
+    <textarea name="size_description" placeholder="Enter Size Details" required class="w-full p-2 border rounded md:col-span-2"></textarea>
+    <textarea name="description" placeholder="Enter Dress Description" required class="w-full p-2 border rounded md:col-span-2"></textarea>
+    <input type="date" name="available_from" required class="w-full p-2 border rounded">
+    <input type="date" name="available_to" required class="w-full p-2 border rounded">
+    <input type="file" name="image" required class="w-full p-2 border rounded md:col-span-2">
+  </div>
+
+  <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 mt-4">
+    Submit for Rent
+  </button>
+</form>
+
+
+        <!-- Auction Form -->
+        <form id="auctionForm" class="tab-content hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <input type="text" name="title" placeholder="Enter Dress Title" required class="w-full p-2 border rounded">
+            <input type="number" name="price" placeholder="Enter Starting Price" required class="w-full p-2 border rounded">
+            <input type="text" name="city" placeholder="Enter City" required class="w-full p-2 border rounded">
+            <input type="text" name="occasion" placeholder="e.g. Formal, Wedding" required class="w-full p-2 border rounded">
+            <input type="text" name="color" placeholder="Enter Color" required class="w-full p-2 border rounded">
+            <select name="length" required class="w-full p-2 border rounded">
+              <option value="">Select Length</option><option>Short</option><option>Midi</option><option>Long</option>
+            </select>
+            <select name="size" required class="w-full p-2 border rounded">
+              <option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <textarea name="size_description" placeholder="Enter Size Details" required class="w-full p-2 border rounded md:col-span-2"></textarea>
+            <textarea name="description" placeholder="Enter Dress Description" required class="w-full p-2 border rounded md:col-span-2"></textarea>
+            <input type="text" name="auction_hours" placeholder="Enter number of hours you wanted your dress to auction for"required class="w-full p-2 border rounded">
+         
+            <input type="file" name="image" required class="w-full p-2 border rounded md:col-span-2">
+          </div>
+          <button type="submit" class="bg-red-700 text-white px-6 py-2 rounded hover:bg-red-800 mt-4">Submit for Auction</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Security Deposit Modal -->
+  <div id="depositModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white p-6 rounded-lg w-96 shadow-lg">
+      <h2 class="text-xl font-bold mb-4 text-red-700">Security Deposit</h2>
+      <p class="mb-2">Deposit Amount: <span id="depositAmount" class="font-semibold text-black"></span> PKR</p>
+      
+      <label class="block mb-2">CVC Number</label>
+      <input type="text" id="cvcInput" maxlength="4" placeholder="Enter CVC" 
+            class="w-full border rounded p-2 mb-4">
+
+      <div class="flex justify-end gap-3">
+        <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+        <button onclick="submitWithDeposit()" 
+                class="px-4 py-2 bg-red-700 text-white rounded hover:bg-red-800">
+          Confirm & Submit
+        </button>
+      </div>
+    </div>
+  </div>
+<!-- Damage Detection Modal -->
+<div id="damageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+  <div class="bg-white p-6 rounded-lg w-96 shadow-lg">
+    <h2 class="text-xl font-bold mb-4 text-red-700">Damage Detection</h2>
+    <p class="mb-4 text-gray-700">Do you want to use AI Damage Detection before submitting?</p>
+
+    <div class="flex justify-end gap-3">
+      <button onclick="skipDetection()" class="px-4 py-2 bg-gray-300 rounded">No</button>
+      <button onclick="runDamageDetection()" class="px-4 py-2 bg-red-700 text-white rounded hover:bg-red-800">Yes</button>
+    </div>
+  </div>
+</div>
+<div id="loadingModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+  <div class="bg-white p-8 rounded-lg shadow-2xl flex flex-col items-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-red-700 border-gray-200 mb-4"></div>
+    <h2 class="text-xl font-bold text-red-700">Please Wait...</h2>
+    <p class="text-gray-600">Processing request, please wait.</p>
+  </div>
+</div>
+  <script src="config.local.js"></script>
+  <script>
+    // Function to check local storage and update the seller's name in the navbar
+function updateSellerName() {
+    // 1. Get the username from local storage
+    const sellerUsername = localStorage.getItem("sellerUsername");
+    
+    // 2. Get the HTML element where the name should be displayed
+    const sellerNameElement = document.getElementById("sellerName");
+
+    // 3. Check if the element exists and if a username was found
+    if (sellerNameElement) {
+        if (sellerUsername && sellerUsername.trim() !== "") {
+            // Display "Hi! [Username]"
+            sellerNameElement.textContent = `Hi! ${sellerUsername}`;
+        } else {
+            // Display the default greeting if no username is found
+            sellerNameElement.textContent = "Hi! Seller";
+        }
+    }
+}
+
+// Execute the function when the script runs (as soon as the DOM is ready)
+updateSellerName();
+    // ✅ Tab switching
+    function openTab(evt, formId) {
+      document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+      document.querySelectorAll(".tab-link").forEach(link => {
+        link.classList.remove("border-black", "text-black", "font-semibold");
+        link.classList.add("text-gray-500");
+      });
+      document.getElementById(formId).style.display = "block";
+      evt.currentTarget.classList.add("border-black", "text-black", "font-semibold");
+      evt.currentTarget.classList.remove("text-gray-500");
+    }
+
+    // ✅ Handle Rent form submit
+    const rentForm = document.getElementById("rentForm");
+    let cachedFormData = null; // dress form data store karega
+
+    rentForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      cachedFormData = new FormData(rentForm);
+      const rentPrice = cachedFormData.get("rent_price");
+      if(!rentPrice){
+        alert("❌ Enter rent price first!");
+        return;
+      }
+      const deposit = (parseFloat(rentPrice) * 0.1).toFixed(2);
+      document.getElementById("depositAmount").innerText = deposit;
+      document.getElementById("depositModal").classList.remove("hidden");
+      document.getElementById("depositModal").classList.add("flex");
+    });
+
+    function closeModal(){
+      document.getElementById("depositModal").classList.add("hidden");
+      document.getElementById("depositModal").classList.remove("flex");
+    }
+
+// ✅ Converts uploaded image to Base64 string
+// ✅ Converts uploaded image to Base64 string
+async function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        // Read the file as a data URL
+        reader.readAsDataURL(file); 
+        
+        reader.onload = () => {
+            // Split the result to get ONLY the Base64 data part (after the comma)
+            const base64String = reader.result.split(",")[1];
+            // WARNING: Large files can still cause issues here.
+            resolve(base64String);
+        };
+        
+        reader.onerror = (error) => reject(error);
+    });
+}
+
+// ✅ Uses Gemini API to detect dress condition with better error handling
+// ✅ Uses Gemini API to detect dress condition with better error handling
+// ✅ Uses Gemini API to detect dress condition with better error handling
+// --- Naye Loading Functions ---
+function showLoader(message = "Processing...") {
+    // Ye function loading modal ko dikhayega
+    document.getElementById("loadingModal").querySelector('p').innerText = message;
+    document.getElementById("loadingModal").classList.remove("hidden");
+    document.getElementById("loadingModal").classList.add("flex");
+}
+
+function hideLoader() {
+    // Ye function loading modal ko chupayega
+    document.getElementById("loadingModal").classList.add("hidden");
+    document.getElementById("loadingModal").classList.remove("flex");
+}
+
+// --- UPDATED analyzeDressCondition Function (Error Handling Better kiya) ---
+async function analyzeDressCondition(imageFile) {
+    // ... (Aapka API Key aur URL code same rahega) ...
+    const API_KEY = window.WEDRENTIFY_GEMINI_API_KEY || "";
+    if (!API_KEY) {
+        alert("Dress condition AI is not configured. Add a key in config.local.js or continue without AI.");
+        return "Error";
+    }
+    
+    try {
+        const supportedTypes = ["image/jpeg", "image/png", "image/webp"];
+        if (!supportedTypes.includes(imageFile.type)) {
+            alert(`❌ Error: Unsupported file type: ${imageFile.type}. Please upload JPEG, PNG, or WEBP.`);
+            // Agar file type galat hai to "Error" return karega
+            return "Error"; 
+        }
+
+        const imageBase64 = await toBase64(imageFile); 
+        const mimeType = imageFile.type || "image/jpeg";
+        const API_URL = 
+            `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+            
+        // ... (Aapka fetch call aur body same rahega) ...
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [
+                    {
+                        parts: [
+                            {
+                                text:`You are a meticulous professional dress inspector. 
+Scrutinize the image for defects like tears, large stains, dirt, or holes.
+Analyze the dress condition and classify it as *exactly one* of the following three categories:
+- Good (Must be absolutely flawless and look brand new)
+- Fair (Has minor but noticeable blemishes, wrinkles, or small, light stains)
+- Damaged (Has clear tears, visible holes, or large, dark stains)
+Return ONLY one of these words: Good, Fair, or Damaged.`
+                            },
+                            {
+                                inline_data: {
+                                    mime_type: mimeType,
+                                    data: imageBase64
+                                }
+                            }
+                        ]
+                    }
+                ]
+            })
+        });
+
+        const result = await response.json();
+        
+        if (!response.ok) {
+            console.error("Gemini API Error:", result);
+            const errorMessage = result.error?.message || response.statusText;
+            alert(`❌ Gemini API failed. Status: ${response.status}. Error: ${errorMessage}`);
+            return "Error"; // API error hone par "Error" return karega
+        }
+
+        const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+        // Sirf 'Good', 'Fair', 'Damaged' ya 'Error' return karega
+        return aiText || "Error"; 
+        
+    } catch (error) {
+        console.error("Network or Internal error:", error);
+        alert("❌ A JavaScript error occurred during AI analysis. Check console.");
+        return "Internal Error"; // Network error hone par "Internal Error" return karega
+    }
+}
+
+
+// --- UPDATED submitWithDeposit Function ---
+async function submitWithDeposit() {
+    const cvc = document.getElementById("cvcInput").value;
+    if (!cvc || cvc.length < 3) {
+        alert("❌ Enter valid CVC!");
+        return;
+    }
+
+    // Deposit Modal ko band karein
+    closeModal(); 
+
+    const sellerUsername = localStorage.getItem("sellerUsername");
+    if (sellerUsername) cachedFormData.append("seller_username", sellerUsername);
+    cachedFormData.append("cvc", cvc);
+
+    const useDamageDetection = confirm("Do you want to use AI Damage Detection?");
+    let aiCondition = ""; // Default value empty string
+
+    if (useDamageDetection) {
+        const imgFile = cachedFormData.get("image");
+        
+        if (imgFile && imgFile.size > 0) {
+            
+            // 1. 🔥 AI Analysis ke liye Loader dikhao
+            showLoader("AI is analyzing the dress condition...");
+            
+            aiCondition = await analyzeDressCondition(imgFile); 
+
+            // 2. 🔥 API ka response aate hi Loader chhupa do
+            hideLoader(); 
+
+            // Check for critical errors (jo humne analyzeDressCondition mein define kiye hain)
+            if (aiCondition === 'Error' || aiCondition === 'Internal Error') {
+                 // Error alert pehle hi dikha diya gaya hai. Ab submission ko rok do.
+                 // Aur aiCondition ko empty string rehne do (ya "Error" bhej do)
+                 cachedFormData.append("ai_condition", ""); 
+                 return; 
+            }
+            
+            // AI Condition ko form data mein add karo
+            alert("AI Condition: " + aiCondition);
+            cachedFormData.append("ai_condition", aiCondition);
+           
+
+        } else {
+            alert("❌ No image file found! Please select an image.");
+            return; 
+        }
+    } else {
+        // Agar user ne detection skip kiya
+        cachedFormData.append("ai_condition", "Not Checked");
+    }
+
+    // --- Final Submission ---
+
+    // 3. 🔥 Submission ke liye dobara Loader dikhao
+    showLoader("Submitting dress details...");
+    
+    const res = await fetch("http://127.0.0.1:8000/api/rentals/add-dress/", {
+        method: "POST",
+        body: cachedFormData,
+    });
+    
+    // 4. 🔥 Submission complete hone par Loader chhupa do
+    hideLoader(); 
+
+    const result = await res.json();
+    if (res.ok) {
+        alert("✅ Dress submitted successfully!"); // Successful message
+        window.location.href = "SellerDresses.html";
+    } else {
+        alert("❌ Error: " + (result.error || "Something went wrong"));
+    }
+}
+
+    // ✅ Logout function
+    function logoutSeller() {
+      localStorage.removeItem("sellerUsername");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Success</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<style>
+.card {
+            background: linear-gradient(135deg, var(--white) 0%, #fefefe 100%);
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            text-align: center;
+            max-width: 600px;
+            margin: 40px auto; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            color: green;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .card p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: rgb(110, 25, 25);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .order {
+    margin-top: 25px;
+    padding: 20px 25px;
+    border: 2px dashed green;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 17px;
+    color: var(--text-dark);
+    /* --- FIX: Changed background-color to background --- */
+    background: linear-gradient(180deg, #ffe2ea, #df315727 60%); 
+    /* ------------------------------------------------ */
+    line-height: 1.8;
+    max-width: 90%;
+    overflow-wrap: break-word;
+    text-align: left;
+}
+
+        .order strong {
+            color: rgb(110, 25, 25);
+        }
+
+        /* Styling the "Back to Home" button */
+.bth {
+    /* Base Styles */
+    background: #EE7373; /* Your chosen primary color */
+    color: white;       /* White text */
+    
+    padding: 12px 30px; /* Generous padding for a larger touch area */
+    border: none;
+    border-radius: 50px; /* Fully rounded/pill shape */
+    
+    /* Typography and Appearance */
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase; /* Professional look */
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    
+    /* Interactivity (Making it Beautiful) */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 15px rgba(238, 115, 115, 0.4); /* Soft shadow for depth */
+}
+
+.bth:hover {
+    /* Lift and deepen the color on hover */
+    background: #DD6161; /* Slightly darker shade of the primary color */
+    transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 6px 20px rgba(238, 115, 115, 0.6); /* Enhanced shadow */
+}
+
+.bth:active {
+    /* Press down effect */
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(238, 115, 115, 0.4);
+}
+        /* Mobile specific adjustments (example based on your provided media queries) */
+        @media (max-width: 768px) {
+            body { padding-top: 100px; } /* Adjust padding if mobile navbar is taller */
+            .card {
+                margin: 30px 15px;
+                padding: 25px 15px;
+            }
+            .card h2 { font-size: 24px; }
+            .order { font-size: 14px; }
+        }
+        /* Styles for the new Screenshot Button */
+#screenshot-btn {
+    /* Base Styles */
+ /* Base Styles */
+    background: #EE7373; /* Your chosen primary color */
+    color: white;       
+    padding: 10px 20px;
+    margin-top: 20px; /* Space above */
+    margin-bottom: 10px; /* Space below */
+    border: none;
+    border-radius: 50px; /* Fully rounded */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+      transition: all 0.3s ease; /* Smooth transition for hover effects */
+       box-shadow: 0 2px 10px rgba(238, 115, 115, 0.4);
+
+}
+
+#screenshot-btn:hover {
+    background:  #DD6161;
+    transform: translateY(-1px);
+     box-shadow: 0 2px 10px rgba(238, 115, 115, 0.4);
+}</style>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container header-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <p>WedRentify</p>
+            </div>
+            <!-- <ul class="nav-menu">
+            <li><a href="index.html">Home</a>
+            </li>
+            <li><a href="Men.html">Men</a>
+            </li>
+            <li><a href="Women.html">Women</a>
+            </li>
+            <li><a href="Venue.html">Venues</a>
+            </li>
+            <li><a href="Auction.html">Auction</a>
+            </li>
+            <li><a href="contact-us.html">Contact Us</a>
+            </li>
+        </ul> -->
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- <a class="navbar-brand" href="#">My Website</a> -->
+
+                    <!-- Toggle button (only visible on mobile) -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Normal desktop menu -->
+                    <div class="collapse navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto nav-menu">
+                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offcanvas for mobile -->
+                    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav mr-auto nav-menu">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="nav-login-cart">
+                <a href="login.html"><button>Login</button></a>
+                <a href="cart.html"></a>
+            </div>
+        </div>
+    </div>
+
+   <div id="screenshot-target" class="card">
+        <h2>Payment Successful!</h2>
+        <p>Thank you for your rental. We are confirming your details.</p>
+        <p class="order">Fetching your order confirmation...</p>
+        
+        <button class="bth" onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+    <div style="text-align: center;"><button id="screenshot-btn">            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            Download Confirmation
+        </button></div>
+
+        <footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+     
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // ✅ Navbar Login / Logout Logic
+        document.addEventListener("DOMContentLoaded", function () {
+           // ✅ Call the function to fetch the latest order info
+            fetchLatestOrderInfo();
+            const navLoginCart = document.querySelector(".nav-login-cart");
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+            const navMenu = document.querySelector(".nav-menu");
+            const navToggle = document.querySelector(".nav-toggle");
+
+            if (isLoggedIn === "true") {
+                navLoginCart.innerHTML = `
+                    <button id="logoutBtn">Logout</button>
+                    <a href="cart.html"></a>
+                    
+                `;
+
+                document.getElementById("logoutBtn").addEventListener("click", () => {
+                    localStorage.removeItem("isLoggedIn");
+                    localStorage.removeItem("buyer_id");
+                    localStorage.removeItem("buyer_username");
+                    window.location.href = "index.html";
+                });
+            }
+
+            // Hamburger menu toggle logic
+            navToggle.addEventListener("click", () => {
+                navMenu.classList.toggle("open");
+                navLoginCart.classList.toggle("open"); // Also toggle login/cart on mobile
+                navToggle.classList.toggle("open"); // For hamburger animation
+            });
+
+
+         
+        });
+
+
+        // ✅ Fetches ONLY the user's latest order info
+        async function fetchLatestOrderInfo() {
+            const orderStatusElement = document.querySelector(".order");
+
+            try {
+                const res = await fetch("http://127.0.0.1:8000/api/rentals/my-orders/"); 
+                
+                if (!res.ok) {
+                    if (res.status === 403 || res.status === 401) {
+                        throw new Error("login first for giving order.");
+                    }
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                const userOrders = await res.json(); 
+
+                if (userOrders.length > 0) {
+                    const latestOrder = userOrders[0];
+
+                    const purchaseDate = new Date(latestOrder.purchase_date).toLocaleDateString('en-UK', {
+                        day: '2-digit', month: 'short', year: 'numeric'
+                    });
+                    
+                    const createdTime = new Date(latestOrder.created_at).toLocaleTimeString('en-US', {
+                        hour: '2-digit', minute: '2-digit'
+                    });
+
+                    orderStatusElement.innerHTML = `
+                        🎉 <strong>Your Order Number: ${latestOrder.order_no}</strong><br>
+                        <strong>Username:</strong> ${latestOrder.username}<br>
+                        <strong>Purchase Date:</strong> ${purchaseDate}<br>
+                        <strong>Order Time:</strong> ${createdTime}<br><br>
+                        ✅ Your payment has been successfully released.<br>
+                        📸 Please take a screenshot of this confirmation.
+                    `;
+
+                } else {
+                    orderStatusElement.innerText = "dont found any order on this account try again .";
+                }
+            } catch (err) {
+                console.error("Error fetching order:", err);
+                orderStatusElement.innerText = `Error loading order details. ${err.message}`;
+            }
+        }
+        // --- Place this function INSIDE your existing <script> block ---
+function captureScreenshot() {
+    // Target the element you want to convert to an image (the whole card)
+    const captureElement = document.getElementById('screenshot-target');
+    
+    // Temporarily hide buttons that shouldn't be in the final image
+    const screenshotBtn = document.getElementById('screenshot-btn');
+    const backBtn = document.querySelector('.bth'); 
+    
+    screenshotBtn.style.display = 'none';
+    backBtn.style.display = 'none'; // Hide the 'Back to Home' button too
+
+    // Use html2canvas to render the DOM element into a canvas
+    html2canvas(captureElement, {
+        allowTaint: true,
+        useCORS: true,
+        backgroundColor: '#f9fff9' // Match the order box background color
+    }).then(function(canvas) {
+        // Convert the canvas image data to a URL
+        const image = canvas.toDataURL("image/png");
+        
+        // Create a temporary link element to trigger download
+        const a = document.createElement('a');
+        a.href = image;
+        a.download = 'WedRentify_Order_Confirmation.png';
+        
+        // Trigger the download
+        document.body.appendChild(a);
+        a.click();
+       
+        
+        // Restore the buttons immediately after capture
+        screenshotBtn.style.display = 'inline-flex';
+        backBtn.style.display = 'block'; 
+
+    }).catch(err => {
+        alert("Error creating screenshot: " + err.message);
+        // Always restore buttons even if capture fails
+        screenshotBtn.style.display = 'inline-flex';
+        backBtn.style.display = 'block';
+    });
+}
+
+// --- Add this line inside your existing DOMContentLoaded block ---
+document.addEventListener("DOMContentLoaded", function () {
+    // ... other setup logic ...
+    
+    // Attach the screenshot function to the new button
+    document.getElementById('screenshot-btn').addEventListener('click', captureScreenshot);
+    
+    // ... rest of the logic ...
+});
+    </script>
+</body>
+</html>

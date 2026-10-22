@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WedRentify | Product Detail</title>
+  <link rel="stylesheet" href="style.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body class="bg-gray-50">
+
+    <div class="container header-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <p>WedRentify</p>
+            </div>
+            <!-- <ul class="nav-menu">
+            <li><a href="index.html">Home</a>
+            </li>
+            <li><a href="Men.html">Men</a>
+            </li>
+            <li><a href="Women.html">Women</a>
+            </li>
+            <li><a href="Venue.html">Venues</a>
+            </li>
+            <li><a href="Auction.html">Auction</a>
+            </li>
+            <li><a href="contact-us.html">Contact Us</a>
+            </li>
+        </ul> -->
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- <a class="navbar-brand" href="#">My Website</a> -->
+
+                    <!-- Toggle button (only visible on mobile) -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Normal desktop menu -->
+                    <div class=" navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        <ul class="navbar-nav  nav-menu">
+                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offcanvas for mobile -->
+                    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav mr-auto nav-menu">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="nav-login-cart">
+                <a href="login.html"><button>Login</button></a>
+                <a href="cart.html"></a>
+            </div>
+        </div>
+    </div>
+  <main class="max-w-6xl mx-auto py-10 px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div>
+      <img id="product-image" class="rounded-lg shadow-md w-full h-auto" alt="Dress Image" />
+    </div>
+
+    <div>
+      <h2 id="product-title" class="text-3xl font-semibold text-gray-800 mb-2"></h2>
+      <p id="product-description" class="text-lg text-gray-600 mb-4"></p>
+      <p id="product-price" class="text-2xl text-red-700 font-bold mb-6"></p>
+
+      <section class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Dress Details</h3>
+        <div id="product-details" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-700"></div>
+
+        <hr class="my-4">
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Seller Information</h3>
+        <div id="seller-info" class="text-gray-700 space-y-1">
+          <p><strong>Username:</strong> <span id="seller-username"></span></p>
+          <p><strong>Contact Number:</strong> <span id="seller-contact"></span></p>
+        </div>
+
+        <button id="rent-btn" class="bg-red-700 mt-10 text-white px-6 py-3 rounded-lg hover:bg-red-800 transition">
+          Rent Now
+        </button>
+      </section>
+    </div>
+  </main>
+<div id="loader" class="fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center hidden z-50">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-red-700"></div>
+    <span class="ml-4 text-lg text-red-700 font-semibold">Processing...</span>
+</div>
+  <!-- Rent Modal -->
+  <div id="rent-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 overflow-y-auto">
+    <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-sm max-h-[90vh] overflow-y-auto">
+      <h2 class="text-lg font-semibold mb-3 text-gray-800 text-center">Enter Details</h2>
+
+      <form id="rent-form" class="space-y-2">
+        <input name="username" type="text" placeholder="Username" required class="w-full border border-gray-300 rounded p-2 text-sm" />
+        <input name="email" type="email" placeholder="Email" required class="w-full border border-gray-300 rounded p-2 text-sm" />
+        <input name="postal_code" type="text" placeholder="Postal Code" required class="w-full border border-gray-300 rounded p-2 text-sm" />
+        <input name="city" type="text" placeholder="City" required class="w-full border border-gray-300 rounded p-2 text-sm" />
+        <input name="purchase_date" type="date" required class="w-full border border-gray-300 rounded p-2 text-sm" />
+        <input name="full_name" type="text" placeholder="Full Name" required class="w-full border border-gray-300 rounded p-2 text-sm" />
+        <textarea name="address" placeholder="Address" required class="w-full border border-gray-300 rounded p-2 text-sm h-16 resize-none"></textarea>
+        <input name="phone_number" type="tel" placeholder="Phone Number" required class="w-full border border-gray-300 rounded p-2 text-sm" />
+
+        <div class="flex justify-end space-x-2 pt-2">
+          <button type="button" id="cancel-btn" class="px-3 py-1 bg-gray-300 text-sm rounded hover:bg-gray-400">Cancel</button>
+          <button type="submit" class="px-3 py-1 bg-red-700 text-white text-sm rounded hover:bg-red-800">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+        <footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+     
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
+    let selectedProduct = null;
+let sellerEmail = null; // 👈 NEW: Global variable to store seller's email
+
+    // ✅ NEW FUNCTION: Fetches and stores the seller's email
+    async function getSellerEmail(username) {
+        if (!username) return "N/A";
+        
+        try {
+            // Fetch ALL users from the API
+            const response = await fetch(`http://127.0.0.1:8000/api/accounts/users/`);
+            if (!response.ok) throw new Error("Failed to fetch user list.");
+
+            const allUsers = await response.json();
+            
+            // Find the specific seller whose username matches
+            const seller = allUsers.find(u => u.username === username && u.type === 'Seller'); 
+
+            if (seller) {
+                console.log(`Seller Email Found: ${seller.email}`);
+                return seller.email;
+            } else {
+                console.warn(`Seller with username '${username}' not found or is not a Seller.`);
+                return "N/A";
+            }
+        } catch (error) {
+            console.error("Error fetching seller email:", error);
+            return "N/A";
+        }
+    }
+    async function loadProduct() {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/rentals/list/`);
+        const allProducts = await response.json();
+        selectedProduct = allProducts.find(p => p.id == productId);
+
+        if (!selectedProduct) {
+          alert("Product not found!");
+          return;
+        }
+
+        document.getElementById("product-image").src = selectedProduct.image || "placeholder.jpg";
+        document.getElementById("product-title").textContent = selectedProduct.name;
+        document.getElementById("product-description").textContent = selectedProduct.description || "No description.";
+        document.getElementById("product-price").textContent = `Rs. ${selectedProduct.rent_price}`;
+        document.getElementById("seller-username").textContent = selectedProduct.seller_username || "N/A";
+        document.getElementById("seller-contact").textContent = selectedProduct.contact_number || "N/A";
+
+        document.getElementById("product-details").innerHTML = `
+          <p><strong>Color:</strong> ${selectedProduct.color || "N/A"}</p>
+          <p><strong>Size:</strong> ${selectedProduct.size || "N/A"}</p>
+          <p><strong>Length:</strong> ${selectedProduct.length || "N/A"}</p>
+          <p><strong>City:</strong> ${selectedProduct.city || "N/A"}</p>
+          <p><strong>Occasion:</strong> ${selectedProduct.occasion || "N/A"}</p>
+          <p><strong>Category:</strong> ${selectedProduct.category || "N/A"}</p>
+        `;
+        sellerEmail = await getSellerEmail(selectedProduct.seller_username);
+      } catch (error) {
+        console.error("Error loading product:", error);
+      }
+    }
+    loadProduct();
+
+
+    const rentBtn = document.getElementById("rent-btn");
+    const rentModal = document.getElementById("rent-modal");
+    const cancelBtn = document.getElementById("cancel-btn");
+
+    rentBtn.addEventListener("click", () => rentModal.classList.remove("hidden"));
+    cancelBtn.addEventListener("click", () => rentModal.classList.add("hidden"));
+
+  document.getElementById("rent-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+const loader = document.getElementById("loader");
+    const confirmButton = e.submitter; 
+
+    // 1. Show the loader (fullscreen) and disable the button immediately
+    loader.classList.remove("hidden"); 
+    if (confirmButton && confirmButton.type === 'submit') {
+        confirmButton.disabled = true; // Prevents double-clicking
+        confirmButton.textContent = 'Processing...'; // Optional: Change button text
+    }
+  const formData = new FormData(e.target);
+  const orderData = Object.fromEntries(formData.entries());
+  orderData.product_id = selectedProduct.id;
+  orderData.product_name = selectedProduct.name;
+  orderData.seller_username = selectedProduct.seller_username;
+  orderData.seller_contact = selectedProduct.contact_number;
+// 🚨 CRITICAL NEW STEP 3: Seller email ko order data mein add karein
+        orderData.seller_email = sellerEmail;
+  try {
+    // Save order
+    const orderRes = await fetch("http://127.0.0.1:8000/api/rentals/rentorder/create/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData)
+    });
+
+    if (!orderRes.ok) {
+      throw new Error("Order creation failed!");
+    }
+
+    // Create Stripe payment
+    const res = await fetch("http://127.0.0.1:8000/api/rentals/create-payment/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: selectedProduct.rent_price })
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error("Payment creation failed: " + errText);
+    }
+
+    const data = await res.json();
+    const stripe = Stripe("pk_test_51SI8MbQec5FN5Z5rJwkfdKlPJFTR4fI6xAagXM7zQxMF0gT9O36UiKUmzy33FLW7Xjho6RmJUvfJIl6ERiIgyAF800cKAULkLj");
+
+    await stripe.redirectToCheckout({ sessionId: data.sessionId });
+  } catch (err) {
+    alert("❌ Error: " + err.message);
+    console.error(err);
+  }
+});
+document.addEventListener("DOMContentLoaded", function() {
+  const btn = document.getElementById("share-btn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      // your modal logic here
+    });
+  }
+});
+const isLoggedIn = localStorage.getItem("isLoggedIn");
+const navLoginCart = document.querySelector(".nav-login-cart"); // ✅ fix added
+
+if (isLoggedIn === "true") {
+  navLoginCart.innerHTML = `
+    <button id="logoutBtn" class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">Logout</button>
+    <a href="cart.html"></a>
+ 
+  `;
+
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("buyer_id");
+    localStorage.removeItem("buyer_username");
+    window.location.href = "index.html";
+  });
+} else {
+  navLoginCart.innerHTML = `
+    <a href="login.html"><button>Login</button></a>
+    <a href="cart.html"></a>
+    
+  `;
+}
+
+
+  </script>
+</body>
+</html>

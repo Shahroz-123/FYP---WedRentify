@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Men's Collection</title>
+
+  <link rel="stylesheet" href="style.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <style>
+    /* ---------- PRODUCT GRID ---------- */
+    .p-heading {
+      text-align: center;
+      margin: 30px 0 10px;
+    }
+
+    .p-heading h1 {
+      font-size: 2.2rem;
+      color: rgb(110, 25, 25);
+      font-weight: 700;
+    }
+
+    .p-product-con {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px 20px;
+    }
+
+    /* ---------- PRODUCT CARD ---------- */
+    .card {
+      width: 280px;
+      background: #ffffff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-bottom: 3px solid #EE7373;
+    }
+
+    .p-text-con {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+
+    .p-card-text h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    .p-card-text p {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 3px 0;
+    }
+
+    .p-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .p-price h2 {
+      font-size: 1.1rem;
+      color: rgb(110, 25, 25);
+    }
+
+    /* ---------- BUTTON ---------- */
+    .rentbtn {
+      background-color: rgb(86, 14, 14);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .rentbtn:hover {
+      background-color: #d83838;
+      transform: scale(1.03);
+    }
+
+    .rentbtn:active {
+      background-color: #a63b3b;
+      transform: scale(0.98);
+    }
+
+    /* ---------- PAGINATION ---------- */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .pagination button {
+      background-color: rgb(86, 14, 14);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .pagination button:hover {
+      background-color: #d83838;
+    }
+
+    .pagination button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      .card {
+        width: 90%;
+      }
+    }
+
+ 
+  </style>
+</head>
+
+<body>
+    <div class="container header-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <p>WedRentify</p>
+            </div>
+            <!-- <ul class="nav-menu">
+            <li><a href="index.html">Home</a>
+            </li>
+            <li><a href="Men.html">Men</a>
+            </li>
+            <li><a href="Women.html">Women</a>
+            </li>
+            <li><a href="Venue.html">Venues</a>
+            </li>
+            <li><a href="Auction.html">Auction</a>
+            </li>
+            <li><a href="contact-us.html">Contact Us</a>
+            </li>
+        </ul> -->
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- <a class="navbar-brand" href="#">My Website</a> -->
+
+                    <!-- Toggle button (only visible on mobile) -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Normal desktop menu -->
+                    <div class="collapse navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto nav-menu">
+                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offcanvas for mobile -->
+                    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav mr-auto nav-menu">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="nav-login-cart">
+                <a href="login.html"><button>Login</button></a>
+                <a href="cart.html"></a>
+            </div>
+        </div>
+    </div>
+
+
+  <div class="p-heading">
+    <h1>Women's Dresses</h1>
+  </div>
+
+  <div class="p-product-con" id="productContainer">
+    <p>Loading dresses...</p>
+  </div>
+
+ <div class="pagination">
+    <button id="prevBtn" class="pop-out-button">Previous</button>
+    <span id="pageInfo"></span>
+    <button id="nextBtn"class="pop-out-button">Next</button>
+  </div>
+
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+     
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+  <script>
+    const container = document.getElementById("productContainer");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const pageInfo = document.getElementById("pageInfo");
+
+    let currentPage = 1;
+    const itemsPerPage = 12;
+    let filteredProducts = [];
+
+    async function loadProducts() {
+      container.innerHTML = "<p>Loading dresses...</p>";
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/rentals/list/");
+        if (!response.ok) throw new Error("Network error");
+        const products = await response.json();
+
+        filteredProducts = products.filter(item => item.category?.toLowerCase() === "female");
+        renderPage();
+      } catch (error) {
+        console.error("Error loading products:", error);
+        container.innerHTML = "<p>Failed to load dresses. Check API or server.</p>";
+      }
+    }
+
+    // --- UPDATED renderPage FUNCTION ---
+function renderPage() {
+    container.innerHTML = "";
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+    if (productsToShow.length === 0) {
+        container.innerHTML = "<p>No dresses found for women.</p>";
+        return;
+    }
+
+    productsToShow.forEach(item => {
+        const aiCondition = item.ai_condition?.trim() || "";
+        let conditionHTML = '';
+        let statusColor = '';
+        let imageStyle = ''; // Used to hold the blue tick overlay style
+
+        // 1. Condition aur Color ka Logic
+        if (aiCondition && aiCondition !== "Not Checked" && aiCondition !== "Error" && aiCondition !== "") {
+            
+            if (aiCondition === "Good") {
+                statusColor = '#28a745'; // Green
+            } else if (aiCondition === "Fair") {
+                statusColor = '#ffc107'; // Yellow (text will be dark on yellow)
+            } else if (aiCondition === "Damaged") {
+                statusColor = '#dc3545'; // Red
+            }
+
+            // 2. Condition Tag (Card ke andar text mein)
+            conditionHTML = `
+                <div style="
+                    display: flex; 
+                    align-items: center; 
+                    gap: 8px; 
+                    margin-top: 5px; 
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                ">
+                    <span style="
+                        padding: 4px 8px; 
+                        border-radius: 4px; 
+                        color: ${aiCondition === "Fair" ? '#333' : 'white'}; /* Fair ke liye dark text */
+                        background-color: ${statusColor};
+                    ">
+                        Condition: ${aiCondition}
+                    </span>
+                </div>`;
+                
+            // 3. Image par Tick (Image ke div mein style add kiya)
+            // Hum image ko ek wrapper div mein daalenge
+            const tickColor = '#007bff'; // Light Blue
+            
+            imageStyle = `
+                <div style="position: relative;">
+                    <img src="${item.image}" alt="${item.name}" />
+                    <div style="
+                        position: absolute; 
+                        top: 10px; 
+                        right: 10px; 
+                        width: 25px; 
+                        height: 25px; 
+                        background-color: ${tickColor}; 
+                        color: white; 
+                        border-radius: 50%; 
+                        display: flex;
+                        align-items: center; 
+                        justify-content: center;
+                        font-size: 16px;
+                        font-weight: bold;
+                        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+                    " title="AI Inspected">✓</div>
+                </div>`;
+        } else {
+            // Agar AI condition set nahi hai, toh sirf image dikhao
+            imageStyle = `<img src="${item.image}" alt="${item.name}" />`;
+        }
+
+
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        card.innerHTML = `
+          ${imageStyle} <div class="p-text-con">
+            <div class="p-card-text">
+              <h1>${item.name}</h1>
+              <p><b>City:</b> ${item.city}</p>
+              <p><b>Occasion:</b> ${item.occasion}</p>
+              <p><b>Size:</b> ${item.size} | <b>Length:</b> ${item.length}</p>
+              ${conditionHTML} </div>
+            <div class="p-price">
+              <div><h2>Rs ${item.rent_price}</h2></div>
+            </div>
+           <button class="rentbtn" onclick="goToProduct(${item.id})">View Details</button>
+          </div>
+        `;
+        container.appendChild(card);
+    });
+
+    updatePagination();
+}
+
+    function updatePagination() {
+      const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPage();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPage();
+      }
+    });
+
+    loadProducts();
+    document.addEventListener("DOMContentLoaded", function () {
+    const navLoginCart = document.querySelector(".nav-login-cart");
+
+    // Check login status from localStorage/sessionStorage
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+     
+    if (isLoggedIn === "true") {
+        // Show Logout Button
+        navLoginCart.innerHTML = `
+            <button id="logoutBtn">Logout</button>
+            <a href="cart.html"></a>
+            
+        `;
+
+        // Logout Event
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("isLoggedIn");
+             // Clear login status
+             localStorage.removeItem("buyer_id");
+             localStorage.removeItem("buyer_username");
+            window.location.href = "index.html"; // Redirect to login page
+        });
+    } else {
+        // Show Login Button
+        navLoginCart.innerHTML = `
+            <a href="login.html"><button>Login</button></a>
+            <a href="cart.html"></a>
+        
+        `;
+    }
+});
+ const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';  
+
+  function goToProduct(productId) {
+    if (isLoggedIn) {
+      window.location.href = `ProductDetailPage.html?id=${productId}`;
+    } else {
+      alert("Please login first!");
+      window.location.href='buyer-login.html'
+    }
+  }
+  </script>
+</body>
+</html>

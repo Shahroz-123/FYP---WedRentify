@@ -1,0 +1,154 @@
+/* --- Global Styles & Animations --- */
+@keyframes fadeInScaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  
+  /* Yeh Naya Gradient Hai (Soft Pink) */
+  background-color: #fff;
+  
+  /* Baaqi settings waisi hi hain */
+  background-size: cover; /* Gradient ke liye zaroori nahi, par rakh sakte hain */
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+/* --- Form Container Styles --- */
+.login-page-container {
+  text-align: center;
+  
+/* YEH WALI LINE: */
+  background-color: rgba(255, 255, 255, 0);
+  
+  /* 2. "Frosted" Blur: Increased to 15px */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px); /* For Safari */
+  
+  /* 3. "Glass" Edge */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  
+  /* 4. "Lifted" Shadow */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+  
+  padding: 40px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  
+  /* 5. "Pop" Animation */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: fadeInScaleUp 0.5s ease-out forwards;
+}
+
+/* "Pop out" effect on hover */
+.login-page-container:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* --- Form Element Styles --- */
+.login-page-container h1 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #333;
+}
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border-radius: 10px;
+  
+  /* --- YAHAN SE GLASS EFFECT SHURU --- */
+  
+  /* 1. Transparent Background (10% opacity) */
+  /* Humne purana solid background hata diya */
+  background-color: rgba(255, 255, 255, 0.1); 
+  
+  /* 2. Frosted Blur (Chota blur, 2px ka) */
+  /* Note: Yeh zaroori nahi, par acha lagta hai */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+
+  /* 3. Border ko thora aur transparent kar dein */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  
+  /* --- YAHAN PAR KHATAM --- */
+
+  box-sizing: border-box; 
+  margin-bottom: 10px;
+  color: #333; /* Text ka color wapis dark kar dein */
+  transition: all 0.3s ease;
+}
+
+.form-input::placeholder {
+    color: #555;
+}
+
+.form-input:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-input:focus {
+  outline: none;
+  transform: translateY(-2px);
+  border-color: rgba(238, 115, 115, 1);
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(238, 115, 115, 0.5); 
+}
+
+/* --- Button Styles --- */
+.login-btn.seller {
+  padding: 14px 24px;
+  font-size: 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  border: none;
+  box-sizing: border-box;
+  background-color: #EE7373;
+  color: white;
+  margin-bottom: 15px; 
+}
+
+.login-btn.seller:hover {
+  background-color: #d86161;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* This is the <a> tag */
+.home-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: transparent;
+  color: #c55d5d;
+  border: 2px solid #e28a8a;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.home-btn:hover {
+  background-color: #EE7373;
+  border-color: #EE7373;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* This is the <p> tag container */
+.back-home {
+  margin-top: 20px;
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delivery & Logistics Disputes | WedRentify Admin</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 90%;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 30px;
+    }
+
+    .search-bar {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      width: 50%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .search-bar button {
+      padding: 10px 15px;
+      border: none;
+      background: #d62828;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .search-bar button:hover {
+      background: #b71c1c;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    table, th, td {
+      border: 1px solid #eee;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 12px;
+    }
+
+    th {
+      background: #d62828;
+      color: white;
+    }
+
+    .pending {
+      color: #d62828;
+      font-weight: bold;
+    }
+
+    .resolved {
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .highlight {
+      background-color: #fff3cd !important;
+    }
+
+    .remove-btn {
+      padding: 6px 10px;
+      background: #d62828;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .remove-btn:hover {
+      background-color: #b71c1c;
+    }
+
+    .back-button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 20px;
+      background: #d62828;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      width: 180px;
+    }
+
+    .back-button:hover {
+      background: #b71c1c;
+    }
+  </style>
+
+  <script>
+    function searchDispute() {
+      let input = document.getElementById("searchInput").value.trim();
+      let rows = document.querySelectorAll("tbody tr");
+      rows.forEach(row => {
+        row.classList.remove("highlight");
+        let buyerCnic = row.cells[2].innerText;
+        let sellerCnic = row.cells[4].innerText;
+        if (buyerCnic === input || sellerCnic === input) {
+          row.classList.add("highlight");
+        }
+      });
+    }
+
+    function removeRow(btn) {
+      const row = btn.parentElement.parentElement;
+      row.remove();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Delivery & Logistics Disputes</h2>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Enter Buyer or Seller CNIC...">
+      <button onclick="searchDispute()">Search</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Dispute ID</th>
+          <th>Buyer Username</th>
+          <th>Buyer CNIC</th>
+          <th>Seller Username</th>
+          <th>Seller CNIC</th>
+          <th>Dispute Comment</th>
+          <th>Admin Remark</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#2051</td>
+          <td>buyer123</td>
+          <td>35202-1234567-8</td>
+          <td>seller789</td>
+          <td>42301-7654321-9</td>
+          <td>Delayed delivery beyond promised date</td>
+          <td>Investigating logistics partner</td>
+          <td class="pending">Pending</td>
+          <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+        <tr>
+          <td>#2052</td>
+          <td>buyer456</td>
+          <td>61101-9876543-2</td>
+          <td>seller321</td>
+          <td>32102-1234567-5</td>
+          <td>Package received was damaged</td>
+          <td>Refund issued and replacement sent</td>
+          <td class="resolved">Resolved</td>
+          <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <a href="admindispute.html" class="back-button">Back to Dispute Home</a>
+  </div>
+</body>
+</html>

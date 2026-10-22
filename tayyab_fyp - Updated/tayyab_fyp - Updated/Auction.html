@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="productpage.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <title>Auction Page</title>
+  <!-- Added styles for new dynamic elements (pagination) -->
+  <style>
+    /* Styles for new elements, respecting your existing structure */
+    .p-product-con {
+        min-height: 400px; /* Ensure container has height while loading */
+    }
+    .loading-text, .error-text {
+        text-align: center;
+        grid-column: 1 / -1; /* Span all columns in the grid */
+        color: #888;
+        font-size: 1.2rem;
+        padding: 40px;
+    }
+    .countdown-timer {
+        background-color: #e91e63; /* Pink color for timer */
+        color: white;
+        padding: 0.5rem;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+    .pagination-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 2rem 0;
+    }
+    .pagination-controls button {
+        background-color: #eee;
+        border: 1px solid #ddd;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    .pagination-controls button:hover {
+        background-color: #ddd;
+    }
+    .pagination-controls button:disabled {
+        background-color: #f9f9f9;
+        color: #ccc;
+        cursor: not-allowed;
+    }
+    .pagination-controls button.active {
+        background-color: #8B0000; /* Match your logo color */
+        color: white;
+        border-color: #8B0000;
+    }
+    /* Simple styling for SVGs in cards */
+    .p-price .size-6 {
+        width: 1.25rem;
+        height: 1.25rem;
+        display: inline-block;
+        color: #facc15; /* yellow-500 */
+    }
+    .pop-out-button {
+  padding: 12px 24px;         /* Adjust padding as needed */
+  border-radius: 50px;        /* Makes it fully rounded */
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+ /* Example background color */
+  cursor: pointer;
+  
+  /* --- This is the secret sauce --- */
+  /* Tells the browser to animate changes to 'transform' and 'box-shadow' */
+  /* It takes 0.3 seconds and has an 'ease' effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* 2. The :hover state (when the mouse is over it) */
+.pop-out-button:hover {
+  /* Scales the button to 110% of its original size */
+  transform: scale(1.1); 
+   transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 6px 20px rgba(238, 115, 115, 0.6);
+}
+/* 1. Define the continuous "pulse" animation
+*/
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05); /* A subtle 5% grow */
+  }
+  100% {
+    transform: scale(1);
+  }
+}/* ==================================================== */
+/* === ULTIMATE CARD SIZE COMPACTING OVERRIDE (AUCTION) === */
+/* ==================================================== */
+
+/* 1. Base Card Container (Forces width and rounding) */
+.p-product-con .card {
+    width: 100% !important; 
+    max-width: 280px !important; /* Fixed width */
+    min-width: 280px !important;
+    height: auto !important;
+    
+    border-radius: 10px !important; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    overflow: hidden !important; 
+    margin: 10px 10px 20px 10px !important; /* Spacing below the card */
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important; /* CRITICAL: Remove card container padding */
+}
+
+/* 2. Image Resizing (Forces height and content fit) */
+.p-product-con .card > img {
+    width: 100% !important;
+    height: 250px !important; /* Standardized height */
+    object-fit: cover !important; 
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom: none !important;
+    padding: 0 !important; /* CRITICAL: Remove image padding/margin */
+    margin: 0 !important;
+}
+
+/* 3. Text Content Wrapper (Reduces vertical space) */
+.p-product-con .card .p-text-con {
+    padding: 10px !important; /* Minimal internal padding */
+    flex-grow: 1 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* 4. Heading (Title) Size and Spacing */
+.p-product-con .card .p-text-con h1 {
+    font-size: 1.3rem !important; /* Smaller title */
+    margin: 0 0 5px 0 !important; /* Reduce top/bottom margin */
+    line-height: 1.1 !important;
+    padding: 0 !important;
+}
+
+/* 5. Contact/Seller Info (Smallest text) */
+.p-product-con .card .p-text-con p {
+    font-size: 0.75rem !important; /* Very small text */
+    margin: 0 !important; /* Remove margins */
+    line-height: 1.2 !important;
+    padding: 0 !important;
+}
+
+/* 6. Price/Seller Name Row (Using flex for horizontal alignment) */
+.p-product-con .card .p-price {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    margin: 5px 0 5px 0 !important; /* Minimal vertical margin */
+    padding: 0 !important;
+}
+
+/* 7. Auction Price Highlight */
+.p-product-con .card .p-price h2 {
+    font-size: 1.2rem !important; /* Controlled price size */
+    color: #8B0000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 8. Button (The pink/maroon button) */
+.p-product-con .card .rentbtn {
+    width: 100% !important;
+    padding: 10px !important;
+    margin: 0 !important; /* Remove top margin */
+    border-radius: 0 0 10px 10px !important; /* Matches card bottom curve */
+    font-size: 1rem !important;
+    background-color: #8B0000 !important;
+}
+.card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 25px rgba(139, 0, 0, 0.2) !important;
+}
+.seller{
+    color:  #8B0000 !important;
+font-size: 30px !important;
+font-weight: bolder;
+}
+  </style>
+</head>
+
+<body>
+    <!-- NAVBAR (Your Original Code) -->
+    <div class="container header-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <p>WedRentify</p>
+            </div>
+            <!-- <ul class="nav-menu">
+            <li><a href="index.html">Home</a>
+            </li>
+            <li><a href="Men.html">Men</a>
+            </li>
+            <li><a href="Women.html">Women</a>
+            </li>
+            <li><a href="Venue.html">Venues</a>
+            </li>
+            <li><a href="Auction.html">Auction</a>
+            </li>
+            <li><a href="contact-us.html">Contact Us</a>
+            </li>
+        </ul> -->
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- <a class="navbar-brand" href="#">My Website</a> -->
+
+                    <!-- Toggle button (only visible on mobile) -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Normal desktop menu -->
+                    <div class="collapse navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto nav-menu">
+                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offcanvas for mobile -->
+                    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav mr-auto nav-menu">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="nav-login-cart">
+                <a href="login.html"><button id="loginLogoutBtn">Login</button></a>
+                <a href="cart.html"></a>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- HEADING (Your Original Code) -->
+    <div class="p-heading">
+        <h1>Auction Page</h1>
+    </div>
+
+    <!-- DYNAMIC CARD CONTAINER (Replaces your static cards) -->
+    <div class="p-product-con" id="auctionContainer">
+        <h1 class="loading-text">Loading auction items...</h1>
+    </div>
+
+    <!-- DYNAMIC PAGINATION CONTAINER -->
+    <div class="pagination-controls" id="paginationContainer">
+        <!-- Pagination buttons will be generated by JavaScript -->
+    </div>
+
+    <!-- FOOTER (Your Original Code) -->
+     <footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+     
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<!-- 
+=========================================
+=== DYNAMIC JAVASCRIPT LOGIC STARTING ===
+=========================================
+-->
+<script>
+    // --- Configuration ---
+    // Your backend API endpoint for fetching auction items
+    const AUCTION_API_URL = 'http://127.0.0.1:8000/api/auction/list/';
+    const ITEMS_PER_PAGE = 12;
+
+    // --- DOM Elements ---
+    const auctionContainer = document.getElementById('auctionContainer');
+    const paginationContainer = document.getElementById('paginationContainer');
+    const loginLogoutBtn = document.getElementById('loginLogoutBtn');
+    
+    // To store all active countdown timers
+    let activeTimers = [];
+
+    // --- Main Functions ---
+
+    /**
+     * Fetches auction data from the backend for a specific page.
+     */
+    async function fetchAuctionData(page = 1) {
+        // Clear old timers before fetching new data
+        clearAllTimers();
+        auctionContainer.innerHTML = `<h1 class="loading-text">Fetching auctions...</h1>`;
+        paginationContainer.innerHTML = ''; // Clear old pagination
+
+        try {
+            // Fetch paginated data
+            const response = await fetch(`${AUCTION_API_URL}?page=${page}&limit=${ITEMS_PER_PAGE}`);
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+
+            // Check if data is valid and auctions exist
+            if (!data.auctions || data.auctions.length === 0) {
+                auctionContainer.innerHTML = `<h1 class="loading-text">No active auctions found.</h1>`;
+                return;
+            }
+
+            // Clear loading text
+            auctionContainer.innerHTML = '';
+            
+            // Render each card
+            data.auctions.forEach(dress => {
+                const card = createAuctionCard(dress);
+                if (card) {
+                    auctionContainer.appendChild(card);
+                }
+            });
+
+            // Render pagination controls
+            renderPagination(data.current_page, data.page_count);
+
+        } catch (error) {
+            console.error('Failed to fetch auction data:', error);
+            auctionContainer.innerHTML = `<h1 class="error-text">Failed to load auctions. Please try again later.</h1>`;
+        }
+    }
+
+    /**
+     * Creates a single auction card element.
+     */
+    function createAuctionCard(dress) {
+        // Calculate time remaining based on the server's deletion_time
+        const now = new Date();
+        const deletionTime = new Date(dress.deletion_time);
+        const timeLeftMs = deletionTime.getTime() - now.getTime();
+
+        // If the 4-hour window has passed, don't render the card
+        if (timeLeftMs <= 0) {
+            return null; // This item is expired
+        }
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.id = `dress-${dress.id}`;
+
+        // Construct the card's inner HTML
+        card.innerHTML = `
+            <div class="p-label">Auction</div>
+            <img
+                src="${dress.dress_image_url}" 
+                alt="${dress.dress_name}"
+                onerror="this.src='https://placehold.co/400x500/e91e63/ffffff?text=Image+Missing'"
+            >
+            <div class="p-text-con">
+                <div class="p-card-text">
+                    <h1>${dress.dress_name || 'Untitled Dress'}</h1>
+                </div>
+                
+                 <div>
+                    
+                      <p class="seller">Seller Name:<br>${dress.seller_username}</p>
+                    </div>
+                    
+                <div class="p-price">
+                    <div>
+                      <p class="seller">Seller Contact:<br>${dress.seller_contact}</p>
+                    </div>
+                   
+                    <div>
+                      
+                        <span style="font-size: 0.9rem; color: #8B0000; font-weight: bolder;">Auction price:</span>
+                        <h2>Rs ${dress.orginalprice.toLocaleString()}</h2>
+                    </div>
+                </div>
+                <div>
+                    <!-- The button now calls handleBidNow() with the dress ID -->
+                    <button class="rentbtn" onclick="handleBidNow(${dress.id})">Bid Now!</button>
+                </div>
+            </div>
+            <!-- Countdown Timer Display -->
+            <div class="countdown-timer" data-deletion-time="${deletionTime.toISOString()}">
+                ⏱️ Time Left: <span class="timer-display">Calculating...</span>
+            </div>
+        `;
+        
+        // Start the timer for this specific card
+        startCountdownTimer(card.querySelector('.timer-display'), timeLeftMs, card);
+        return card;
+    }
+
+    /**
+     * Handles the "Bid Now" button click.
+     */
+    function handleBidNow(dressId) {
+        const buyerUsername = localStorage.getItem("buyer_username");
+
+        if (!buyerUsername) {
+            alert("You must be logged in to place a bid.");
+            window.location.href = "login.html"; // Redirect to login
+        } else {
+            // User is logged in, redirect to the detail page with the ID
+            window.location.href = `AuctionDetailPage.html?id=${dressId}`;
+        }
+    }
+
+    /**
+     * Renders pagination buttons.
+     */
+    function renderPagination(currentPage, totalPages) {
+        paginationContainer.innerHTML = ''; // Clear old buttons
+        
+        if (totalPages <= 1) return; // No pagination needed
+
+        // "Previous" Button
+        const prevButton = document.createElement('button');
+        prevButton.textContent = '« Prev';
+        prevButton.disabled = (currentPage === 1);
+        prevButton.onclick = () => fetchAuctionData(currentPage - 1);
+        paginationContainer.appendChild(prevButton);
+
+        // Page Number Buttons (simplified for brevity)
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            if (i === currentPage) {
+                pageButton.className = 'active';
+            }
+            pageButton.onclick = () => fetchAuctionData(i);
+            paginationContainer.appendChild(pageButton);
+        }
+
+        // "Next" Button
+        const nextButton = document.createElement('button');
+        nextButton.textContent = 'Next »';
+        nextButton.disabled = (currentPage === totalPages);
+        nextButton.onclick = () => fetchAuctionData(currentPage + 1);
+        paginationContainer.appendChild(nextButton);
+    }
+
+    // --- Timer Logic ---
+
+    /**
+     * Starts a countdown timer for a specific card.
+     */
+    function startCountdownTimer(timerElement, timeLeftMs, cardElement) {
+        const updateTimer = () => {
+            if (timeLeftMs <= 0) {
+                clearInterval(intervalId);
+                timerElement.textContent = "EXPIRED";
+                // Remove the card from the page once the timer hits zero
+                if(cardElement) {
+                    cardElement.remove();
+                }
+                return;
+            }
+
+            // Calculate hours, minutes, seconds
+            let seconds = Math.floor((timeLeftMs / 1000) % 60);
+            let minutes = Math.floor((timeLeftMs / (1000 * 60)) % 60);
+            let hours = Math.floor((timeLeftMs / (1000 * 60 * 60))); // Total hours left
+
+            const pad = (n) => n.toString().padStart(2, '0');
+            // Format: 03h : 59m : 01s
+            timerElement.textContent = `${pad(hours)}h : ${pad(minutes)}m : ${pad(seconds)}s`;
+
+            timeLeftMs -= 1000;
+        };
+
+        // Run immediately to show time
+        updateTimer(); 
+        
+        // Start the 1-second interval
+        const intervalId = setInterval(updateTimer, 1000);
+        activeTimers.push(intervalId); // Store for cleanup
+    }
+
+    /**
+     * Clears all active timers (e.g., when changing page).
+     */
+    function clearAllTimers() {
+        activeTimers.forEach(timerId => clearInterval(timerId));
+        activeTimers = [];
+    }
+
+    /**
+     * Updates the login/logout button based on local storage.
+     */
+    function checkBuyerLogin() {
+        const buyerUsername = localStorage.getItem("buyer_username");
+        if (buyerUsername) {
+            loginLogoutBtn.textContent = 'Logout';
+            loginLogoutBtn.onclick = () => {
+                localStorage.removeItem("buyer_username");
+                window.location.reload(); // Refresh to update state
+            };
+        } else {
+            loginLogoutBtn.textContent = 'Login';
+            loginLogoutBtn.onclick = () => window.location.href = 'login.html';
+        }
+    }
+
+    // --- Initial Load ---
+    document.addEventListener('DOMContentLoaded', () => {
+        checkBuyerLogin();
+        fetchAuctionData(1); // Load the first page of auctions
+    });
+
+</script>
+
+</body>
+</html>
+

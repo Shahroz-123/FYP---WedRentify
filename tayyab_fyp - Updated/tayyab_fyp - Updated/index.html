@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="customalert.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        @media (max-width: 576px) {
+
+            .logoname,
+            .donation-section-left h1,
+            .newsletter h1 {
+                font-size: 30px;
+            }
+
+            .hero-hand-icon img {
+                width: 40px;
+            }
+
+            .how-it-works {
+                flex-direction: column;
+            }
+
+            .how-it-works>div {
+                width: 100% !important;
+            }
+
+            .newsletter div {
+                width: 100% !important;
+            }
+
+            .donation-section {
+                margin: 50px 0px !important;
+            }
+
+            .donation-section-right {
+                display: none;
+            }
+
+
+            .donation-section-left h1 {
+                text-align: center;
+            }
+
+            .donation-buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter div {
+                margin-right: 15px;
+            }
+
+ 
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="container header-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <p>WedRentify</p>
+            </div>
+            <!-- <ul class="nav-menu">
+            <li><a href="index.html">Home</a>
+            </li>
+            <li><a href="Men.html">Men</a>
+            </li>
+            <li><a href="Women.html">Women</a>
+            </li>
+            <li><a href="Venue.html">Venues</a>
+            </li>
+            <li><a href="Auction.html">Auction</a>
+            </li>
+            <li><a href="contact-us.html">Contact Us</a>
+            </li>
+        </ul> -->
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- <a class="navbar-brand" href="#">My Website</a> -->
+
+                    <!-- Toggle button (only visible on mobile) -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Normal desktop menu -->
+                    <div class="collapse navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto nav-menu">
+                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offcanvas for mobile -->
+                    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav mr-auto nav-menu">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="nav-login-cart">
+                <a href="login.html"><button>Login</button></a>
+                <a href="cart.html"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero">
+        <div class="hero-left">
+            <div>
+                <div class="hero-hand-icon ">
+                    <h1 class="logoname">WedRentify</h1>
+                    <img src="hand_icon.png" alt="Hand Icon">
+                </div>
+                <p>Wedding Attire Rentals</p>
+                <div class="hero-para">
+                    Revolutionizing Wedding Fashion in PakistanWedRentify is the first AI-powered wedding attire rental
+                    platform that simplifies the process of renting and maintaining wedding dresses. Our
+                    innovative AI-based auction system ensures the best pricing for sellers, while venue
+                    recommendations make wedding planning seamless.
+                </div>
+            </div>
+            <div class="hero-latest-btn pop-out-button">
+                <div>Explore Now</div>
+                <img src="arrow.png" alt="Arrow Icon">
+            </div>
+        </div>
+        <div class="hero-right herofall">
+            <img src="67565d56ad2dd.png" alt="Hero Image">
+        </div>
+    </div>
+
+    <header>
+        <h1>
+            Features Of Our Web App?<br />
+            <strong>Powered by WedRentify</strong>
+        </h1>
+
+        <p>
+            WedRentify's AI-powered auction system ensures fair pricing for sellers and renters. Verified dry-cleaning
+            partners maintain quality, while AI-driven damage detection protects users. venue recommendations simplify
+            wedding planning. We ensure secure payments..
+        </p>
+    </header>
+
+    <main>
+        <ul class="cards-container">
+            <li class="cyan-feature-card">
+                <h2>AI-Powered Auctions</h2>
+                <p>
+                    Our AI-driven auction system optimizes pricing, helping sellers maximize earnings while offering
+                    fair deals to biders.
+                </p>
+            </li>
+
+            <li class="red-feature-card">
+                <h2>Secure Payment And Fast Delivery
+                </h2>
+                <p>
+                    Your transactions are protected with our secure payment system, and we ensure your orders are
+                    delivered on time for a hassle-free wedding experience.
+
+
+                </p>
+            <li class="orange-feature-card">
+                <h2>AI-Based Dress Damage Detection</h2>
+                <p>
+                    Our AI detection Features takes images to detect damages, ensuring fair accountability for
+                    renters and sellers.
+                </p>
+            </li>
+
+            <li class="blue-feature-card">
+                <h2> Venues </h2>
+                <p>
+                    Find the perfect venue with multiple options recomended by us for you that tailored to your budget
+                    .
+                </p>
+            </li>
+        </ul>
+    </main>
+
+
+    <div class="donation-section">
+        <div class="donation-section-left">
+            <h1>Give Love, Share Happiness 💖</h1>
+            <p>At WedRentify, you can donate your bridal or groom dresses to help those in need. Every donated dress
+                brings joy to someone’s special day — spreading kindness and beauty across our community.</p>
+            <div class="donation-buttons">
+                <button class="pop-out-button" onclick="window.location.href='donations.html'">Explore Donated
+                    Dresses</button>
+                <button class="pop-out-button" onclick="window.location.href='donatedress.html'">Donate a Dress</button>
+            </div>
+        </div>
+
+        <div class="donation-section-right ">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6 interactive-heart">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 
+        6.5 3.5 5 5.5 5c1.54 0 3.04.99 
+        3.57 2.36h1.87C13.46 5.99 14.96 5 
+        16.5 5 18.5 5 20 6.5 20 
+        8.5c0 3.78-3.4 6.86-8.55 
+        11.54L12 21.35z" />
+            </svg>
+        </div>
+    </div>
+
+
+    <div class="how-it-works container">
+        <div class="how-it-works-image">
+            <img src="https://img.perniaspopupshop.com/catalog/product/n/k/NKGC102213_1.jpg?impolicy=detailimageprod"
+                alt="How It Works">
+            <!-- <div></div> -->
+        </div>
+        <div class="how-it-works-content">
+            <h2>How It Works</h2>
+
+            <div class="how-it-works-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                </svg>
+
+                <div>
+                    <h3>Browse & Select</h3>
+                    <p>Explore our curated collection of premium bridal and groom attire.</p>
+                </div>
+            </div>
+
+            <div class="how-it-works-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m9 14.25 6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185ZM9.75 9h.008v.008H9.75V9Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008V13.5Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                </svg>
+
+                <div>
+                    <h3>Bid or Rent Instantly</h3>
+                    <p>Participate in AI-powered auctions or rent at a fixed price.</p>
+                </div>
+            </div>
+
+            <div class="how-it-works-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                </svg>
+
+                <div>
+                    <h3>Get it Delivered</h3>
+                    <p>Receive your professionally cleaned and steamed dress at your doorstep.</p>
+                </div>
+            </div>
+
+            <div class="how-it-works-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.25 9.75h4.875a2.625 2.625 0 0 1 0 5.25H12M8.25 9.75 10.5 7.5M8.25 9.75 10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185Z" />
+                </svg>
+
+                <div>
+                    <h3>Enjoy & Return</h3>
+                    <p>After your big day, return the dress for reuse.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class='newsletter'>
+        <h1>Get Exculsive Offers On Your Email!</h1>
+        <p>Subscribe to our newsletter and stay updated!</p>
+        <div>
+            <input type="email" placeholder='Enter Your Email Address' />
+            <button class="pop-out-button Subscibe">Subscibe</button>
+        </div>
+    </div>
+    <div id="custom-alert" class="custom-alert-overlay">
+        <div class="custom-alert-box">
+            <h2 id="alert-title" class="alert-title"></h2>
+            <p id="alert-message" class="alert-message"></p>
+            <button id="alert-close" class="alert-close-btn">OK</button>
+        </div>
+    </div>
+
+
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+    <!-- Bootstrap JS (with Popper included) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script src="index.js">
+
+
+    </script>
+
+    <script src="custom-alert.js"></script>
+    <script>document.addEventListener("DOMContentLoaded", () => {
+            const alertOverlay = document.getElementById('custom-alert');
+            if (!alertOverlay) return; // Stop if alert HTML isn't on the page
+
+            const alertTitleEl = document.getElementById('alert-title');
+            const alertMessageEl = document.getElementById('alert-message');
+            const alertCloseBtn = document.getElementById('alert-close');
+
+            /**
+             * Hides the custom alert.
+             */
+            function hideCustomAlert() {
+                alertOverlay.classList.remove('show');
+            }
+
+            // --- Event Listeners for closing the alert ---
+
+            // 1. Hide alert when "OK" button is clicked
+            alertCloseBtn.addEventListener('click', hideCustomAlert);
+
+            // 2. Hide alert when clicking on the background overlay
+            alertOverlay.addEventListener('click', (event) => {
+                if (event.target === alertOverlay) {
+                    hideCustomAlert();
+                }
+            });
+        });
+
+        /**
+         * Shows the custom alert.
+         * This function is made global so other scripts can call it.
+         * @param {string} title - The title text.
+         * @param {string} message - The message body.
+         */
+        function showCustomAlert(title, message) {
+            const alertOverlay = document.getElementById('custom-alert');
+            const alertTitleEl = document.getElementById('alert-title');
+            const alertMessageEl = document.getElementById('alert-message');
+
+            if (alertOverlay && alertTitleEl && alertMessageEl) {
+                // 1. Set the text
+                alertTitleEl.textContent = title;
+                alertMessageEl.textContent = message;
+
+                // 2. Show the alert by adding the 'show' class
+                alertOverlay.classList.add('show');
+            } else {
+                console.error("Custom alert HTML elements not found!");
+            }
+        }
+        // This code goes in your main index.js file
+
+        // Find your subscribe button
+        const subscribeButton = document.querySelector(".Subscibe");
+
+        // Add the click event listener
+        subscribeButton.addEventListener("click", () => {
+
+            // Call the global function from custom-alert.js
+            showCustomAlert("Thank You! 🙏", "You have successfully subscribed to our newsletter.");
+        });
+
+        // ... rest of your code for index.js
+    </script>
+
+</body>
+
+</html>

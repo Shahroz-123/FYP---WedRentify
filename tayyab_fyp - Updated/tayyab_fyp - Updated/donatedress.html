@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate a Dress | WedRentify</title>
+  <link rel="stylesheet" href="style.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>.pop-out-button {
+  padding: 12px 24px;         /* Adjust padding as needed */
+  border-radius: 50px;        /* Makes it fully rounded */
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+ /* Example background color */
+  cursor: pointer;
+  
+  /* --- This is the secret sauce --- */
+  /* Tells the browser to animate changes to 'transform' and 'box-shadow' */
+  /* It takes 0.3 seconds and has an 'ease' effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* 2. The :hover state (when the mouse is over it) */
+.pop-out-button:hover {
+  /* Scales the button to 110% of its original size */
+  transform: scale(1.1); 
+   transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 6px 20px rgba(238, 115, 115, 0.6);
+}
+/* 1. Define the continuous "pulse" animation
+*/
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05); /* A subtle 5% grow */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>
+</head>
+<body class="bg-gray-50">
+
+    <div class="container header-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <p>WedRentify</p>
+            </div>
+            <!-- <ul class="nav-menu">
+            <li><a href="index.html">Home</a>
+            </li>
+            <li><a href="Men.html">Men</a>
+            </li>
+            <li><a href="Women.html">Women</a>
+            </li>
+            <li><a href="Venue.html">Venues</a>
+            </li>
+            <li><a href="Auction.html">Auction</a>
+            </li>
+            <li><a href="contact-us.html">Contact Us</a>
+            </li>
+        </ul> -->
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- <a class="navbar-brand" href="#">My Website</a> -->
+
+                    <!-- Toggle button (only visible on mobile) -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Normal desktop menu -->
+                    <div class=" navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        <ul class="navbar-nav nav-menu">
+                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Offcanvas for mobile -->
+                    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav mr-auto nav-menu">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Men.html">Men</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Women.html">Women</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Venue.html">Venue</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Auction.html">Auction</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="nav-login-cart">
+                <a href="login.html"><button>Login</button></a>
+                <a href="cart.html"></a>
+            </div>
+        </div>
+    </div>
+
+  <main class="max-w-lg mx-auto mt-16 p-8 bg-white rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center text-red-700">Donate Your Dress</h2>
+
+    <form id="donation-form" enctype="multipart/form-data" class="space-y-4">
+      <input type="text" name="donor_name" placeholder="Your Name" required class="w-full border p-2 rounded">
+      <input type="text" name="donor_contact" placeholder="Your Contact Number" required class="w-full border p-2 rounded">
+      <input type="text" name="dress_title" placeholder="Dress Title" required class="w-full border p-2 rounded">
+      <textarea name="dress_description" placeholder="Dress Description" class="w-full border p-2 rounded h-24"></textarea>
+      <input type="text" name="dress_size" placeholder="Dress Size (e.g., Small, Medium, Large)" class="w-full border p-2 rounded">
+      <input type="file" name="dress_image" accept="image/*" class="w-full border p-2 rounded">
+
+      <button type="submit" class="w-full bg-red-700 text-white py-2 rounded hover:bg-red-800 transition">Donate Now</button>
+    </form>
+  </main>
+
+  <section id="donations-container" class="max-w-6xl mx-auto mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  <!-- Donation cards will appear here -->
+</section>
+ <footer class="footer">
+        <div class="footer-logo">
+            <p>WedRentify</p>
+        </div>
+     
+        <div class="footer-social-icon">
+            <div class="footer-icons-container pop-out-button">
+                <img src="instagram_icon.png" alt="Instagram">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="pintester_icon.png" alt="Pinterest">
+            </div>
+            <div class="footer-icons-container pop-out-button">
+                <img src="whatsapp_icon.png" alt="WhatsApp">
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <hr>
+            <p>Copyright &copy; 2024 - All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+
+    <script>
+     
+    document.addEventListener("DOMContentLoaded", function () {
+    const navLoginCart = document.querySelector(".nav-login-cart");
+
+    // Check login status from localStorage/sessionStorage
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+     
+    if (isLoggedIn === "true") {
+        // Show Logout Button
+        navLoginCart.innerHTML = `
+            <button id="logoutBtn">Logout</button>
+            <a href="cart.html"></a>
+            
+        `;
+
+        // Logout Event
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("isLoggedIn");
+             // Clear login status
+             localStorage.removeItem("buyer_id");
+             localStorage.removeItem("buyer_username");
+            window.location.href = "index.html"; // Redirect to login page
+        });
+    } else {
+        // Show Login Button
+        navLoginCart.innerHTML = `
+            <a href="login.html"><button>Login</button></a>
+            <a href="cart.html"></a>
+         
+        `;
+    }
+});
+document.getElementById("donation-form").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const buyer_username = localStorage.getItem("buyer_username");
+
+  if (!buyer_username) {
+    alert("Please log in before donating.");
+    return;
+  }
+
+  formData.append("buyer_username", buyer_username);
+
+  const response = await fetch("http://127.0.0.1:8000/api/donations/add/", {
+    method: "POST",
+    body: formData
+  });
+
+  const result = await response.json();
+  if (response.ok) {
+    alert(result.message || "🎉 Thank you for your donation!");
+    this.reset();
+  } else {
+    alert("❌ Error: " + (result.error || "Something went wrong"));
+  }
+});
+const container = document.getElementById("donations-container");
+    const loggedInUser = localStorage.getItem("buyer_username");
+
+    // ✅ Fetch all donation dresses
+    async function loadDonations() {
+  try {
+    const res = await fetch("http://127.0.0.1:8000/api/donations/list/");
+    const donations = await res.json();
+
+    const loggedInUser = localStorage.getItem("buyer_username");
+
+    if (!loggedInUser) {
+      container.innerHTML = `<p class='col-span-full text-center text-gray-600'>
+        Please log in to view your donations.
+      </p>`;
+      return;
+    }
+
+    // ✅ Filter donations to show only those owned by logged-in buyer
+    const userDonations = donations.filter(d => d.buyer_username === loggedInUser);
+
+    if (userDonations.length === 0) {
+      container.innerHTML = `<p class='col-span-full text-center text-gray-600'>
+        You haven't donated any dresses yet.
+      </p>`;
+      return;
+    }
+
+    // ✅ Display only the logged-in user's donations
+    container.innerHTML = userDonations.map(d => `
+      <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition">
+        <img src="${d.dress_image ? d.dress_image : 'placeholder.jpg'}"
+             class="h-64 w-full object-cover"
+             alt="${d.dress_title}">
+
+        <div class="p-4">
+          <h2 class="text-lg font-semibold text-gray-800">${d.dress_title}</h2>
+          <p class="text-sm text-gray-600 mb-2">${d.dress_description || 'No description available.'}</p>
+          <p class="text-sm text-gray-700"><strong>Size:</strong> ${d.dress_size || 'N/A'}</p>
+          <p class="text-sm text-gray-700"><strong>Donor:</strong> ${d.donor_name}</p>
+          <p class="text-sm text-gray-700"><strong>Contact:</strong> ${d.donor_contact}</p>
+
+          <button onclick="deleteDonation(${d.id})"
+                  class="mt-3 w-full bg-red-700 text-white py-1 rounded hover:bg-red-800 transition">
+            Delete Donation
+          </button>
+        </div>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    console.error("Error loading donations:", err);
+    container.innerHTML = `<p class='col-span-full text-center text-red-600'>
+      Failed to load donations.
+    </p>`;
+  }
+}
+
+
+    // ✅ Delete donation (only if owned by logged-in donor)
+    async function deleteDonation(id) {
+      if (!confirm("Are you sure you want to delete this donation?")) return;
+
+      try {
+        const res = await fetch(`http://127.0.0.1:8000/api/donations/delete/${id}/`, {
+          method: "DELETE"
+        });
+
+        if (res.ok) {
+          alert("Donation deleted successfully!");
+          loadDonations(); // refresh the list
+        } else {
+          alert("Failed to delete donation.");
+        }
+      } catch (error) {
+        console.error("Error deleting donation:", error);
+      }
+    }
+
+    // Load data initially
+    loadDonations();
+</script>
+</html>

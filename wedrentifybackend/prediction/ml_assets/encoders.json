@@ -1,0 +1,31 @@
+{
+  "condition": [
+    "Brand New",
+    "Excellent",
+    "Fair",
+    "Good",
+    "Worn Once"
+  ],
+  "fabric": [
+    "Banarsi",
+    "Brocade",
+    "Chiffon",
+    "Cotton Silk",
+    "Jamawar",
+    "Karandi",
+    "Khaddar",
+    "Korean Raw Silk",
+    "Net",
+    "Organza",
+    "Pure Chiffon",
+    "Raw Silk",
+    "Silk",
+    "Tissue",
+    "Velvet"
+  ],
+  "work_intensity": [
+    "Heavy",
+    "Light",
+    "Medium"
+  ]
+}

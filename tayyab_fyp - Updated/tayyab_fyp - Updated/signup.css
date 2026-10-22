@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffeef0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-page-container {
+    text-align: center;
+    background-color: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .brand-name {
+    color: #b91c1c;
+  }
+  
+  .login-box h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .tagline {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  .login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .login-btn {
+    padding: 12px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .login-btn.seller {
+    background-color:  #ff577f; ;
+  }
+  
+  .login-btn.seller:hover {
+    background-color: #e6456a;;
+  }
+  
+  .login-btn.buyer {
+    background-color:  #ff577f; ;
+  }
+  
+  .login-btn.buyer:hover {
+    background-color: #e6456a;;
+  }
+  
+  .signup-line {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .signup-line a {
+    color: #b91c1c;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .signup-line a:hover {
+    text-decoration: underline;
+  }
+  .back-home {
+    margin-top: 20px;
+  }
+  
+  .home-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f3f4f6;
+    color: #b91c1c;
+    border: 1px solid #b91c1c;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .home-btn:hover {
+    background-color: #b91c1c;
+    color: #fff;
+  }
+  

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Manage Dry Cleaners - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom style for image preview in table */
+        .h-12 { height: 3rem; }
+        .w-12 { width: 3rem; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+    <div class="mb-6">
+        <a href="admin.html"
+           class="inline-block bg-[#b71c1c] text-white px-4 py-2 rounded-md hover:bg-[#b71c1c] hover:text-white transition">
+            ← Back to Home
+        </a>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-2xl font-bold text-gray-700 mb-4">Add New Dry Cleaner</h2>
+        <form id="drycleaner-form">
+            <div class="mb-4">
+                <label for="drycleaner-name" class="block text-gray-700 font-semibold">Dry Cleaner Name</label>
+                <input type="text" id="drycleaner-name" name="drycleaner-name" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+            </div>
+
+            <div class="mb-4">
+                <label for="contact-number" class="block text-gray-700 font-semibold">Contact Number</label>
+                <input type="tel" id="contact-number" name="contact-number" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+            </div>
+
+            <div class="mb-4">
+                <label for="drycleaner-image" class="block text-gray-700 font-semibold">Dry Cleaner Image</label>
+                <input type="file" id="drycleaner-image" name="drycleaner-image" accept="image/*" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-[#b71c1c] text-white py-2 rounded-md hover:bg-[#b71c1c] hover:text-white transition">
+                Add Dry Cleaner
+            </button>
+        </form>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-gray-700 mb-4">Manage Dry Cleaners</h2>
+        <table class="w-full table-auto border-collapse">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 border-b text-left">Dry Cleaner Name</th>
+                    <th class="px-4 py-2 border-b text-left">Contact Number</th>
+                    <th class="px-4 py-2 border-b text-left">Image</th>
+                    <th class="px-4 py-2 border-b text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody id="drycleaner-table-body">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Change this:
+// const API_BASE_URL = "http://127.0.0.1:8000/api/rentals/drycleaners/";
+
+// TO THIS: (Use the correct 'wedrentify_admin' prefix)
+const API_BASE_URL = "http://127.0.0.1:8000/api/wedrentify_admin/drycleaners/";
+        const form = document.getElementById('drycleaner-form');
+        const tableBody = document.getElementById('drycleaner-table-body');
+
+        document.addEventListener('DOMContentLoaded', loadDryCleaners);
+
+        // --- 1. Load Dry Cleaners into Table (GET Request) ---
+        async function loadDryCleaners() {
+            tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4">Loading dry cleaners...</td></tr>`;
+
+            try {
+                const response = await fetch(API_BASE_URL);
+                if (!response.ok) throw new Error('Failed to fetch data');
+
+                const cleaners = await response.json();
+                renderTable(cleaners);
+            } catch (error) {
+                console.error("Error loading dry cleaners:", error);
+                tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-red-600">Failed to load data. Please check the backend server and URLs.</td></tr>`;
+            }
+        }
+
+        // --- 2. Render Table Rows ---
+        function renderTable(cleaners) {
+            if (cleaners.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4">No dry cleaners added yet.</td></tr>`;
+                return;
+            }
+
+            tableBody.innerHTML = cleaners.map(cleaner => `
+                <tr data-id="${cleaner.id}" class="hover:bg-gray-50 transition">
+                    <td class="px-4 py-3 border-b">${cleaner.name}</td>
+                    <td class="px-4 py-3 border-b">${cleaner.contact_number}</td>
+                    <td class="px-4 py-3 border-b">
+                        ${cleaner.image_url ? 
+                            `<img src="${cleaner.image_url}" alt="${cleaner.name} image" class="h-12 w-12 object-cover rounded-md">` : 
+                            'N/A'}
+                    </td>
+                    <td class="px-4 py-3 border-b">
+                        <button 
+                            onclick="deleteDryCleaner(${cleaner.id}, this)"
+                            class="bg-red-600 text-white px-3 py-1 rounded-md text-sm hover:bg-red-700 transition">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // --- 3. Handle Form Submission (POST Request) ---
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitButton = e.submitter;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Adding...';
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to add dry cleaner. Check server response.');
+                }
+
+                alert('Dry Cleaner added successfully!');
+                form.reset(); 
+                loadDryCleaners();
+                
+            } catch (error) {
+                console.error("Submission Error:", error);
+                alert(`Error: ${error.message}`);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Add Dry Cleaner';
+            }
+        });
+
+        // --- 4. Handle Deletion (DELETE Request) ---
+        window.deleteDryCleaner = async function(cleanerId, buttonElement) {
+            if (!confirm(`Are you sure you want to permanently delete dry cleaner #${cleanerId}?`)) return;
+
+            buttonElement.disabled = true;
+            buttonElement.textContent = 'Deleting...';
+
+            try {
+                const deleteUrl = `${API_BASE_URL}delete/${cleanerId}/`;
+                const response = await fetch(deleteUrl, {
+                    method: 'DELETE',
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to delete dry cleaner.');
+                }
+
+                alert(`Dry Cleaner #${cleanerId} deleted successfully.`);
+                
+                // Remove the row from the DOM
+                buttonElement.closest('tr').remove();
+                
+                if (tableBody.children.length === 0) {
+                    loadDryCleaners();
+                }
+
+            } catch (error) {
+                console.error("Deletion Error:", error);
+                alert(`Error: ${error.message}`);
+                buttonElement.disabled = false;
+                buttonElement.textContent = 'Delete';
+            }
+        }
+        
+    </script>
+</body>
+</html>

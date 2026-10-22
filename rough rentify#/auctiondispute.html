@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Title Change -->
+  <title>Auction Disputes | WedRentify Admin</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px; }
+    .container { width: 95%; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    h2 { text-align: center; color: #8B1A1A; margin-bottom: 30px; font-size: 2rem; }
+    .search-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+    .search-bar input { padding: 10px; width: 40%; border: 1px solid #ccc; border-radius: 6px; }
+    .search-bar button { padding: 10px 20px; border: none; background: #8B1A1A; color: white; border-radius: 6px; cursor: pointer; transition: background 0.3s; }
+    .search-bar button:hover { background: #6b0f0f; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px; border: 1px solid #eee; text-align: left; }
+    th { background: #8B1A1A; color: white; }
+    .status-pending { color: #d97706; font-weight: bold; }
+    .status-resolved { color: #16a34a; font-weight: bold; }
+    .highlight { background-color: #fef9c3 !important; }
+    .action-btn { padding: 6px 12px; color: #fff; border: none; border-radius: 5px; cursor: pointer; margin: 0 4px; transition: opacity 0.3s; }
+    .resolve-btn { background-color: #22c55e; }
+    .resolve-btn.resolved { background-color: #6b7280; cursor: not-allowed; }
+    .delete-btn { background-color: #ef4444; }
+    .action-btn:hover { opacity: 0.8; }
+    .back-button { display: block; margin: 30px auto 0; padding: 12px 20px; background: #4b5563; color: white; border-radius: 8px; cursor: pointer; text-align: center; text-decoration: none; width: fit-content; }
+    .back-button:hover { background: #374151; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Title Change -->
+    <h2>Auction Disputes Management</h2>
+    <div class="search-bar">
+      <!-- CHANGE 1: Placeholder text update -->
+      <input type="text" id="searchInput" placeholder="Enter Complaint No to search...">
+      <button onclick="searchDispute()">Search</button>
+    </div>
+    <div style="overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Complaint No</th>
+                    <th>User Role</th>
+                    <th>CNIC</th>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Phone</th>
+                    <th>Details</th>
+                    <th>Against User</th>
+                    <th>Against Contact</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="disputesTableBody">
+                <!-- Data will be loaded here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <a href="admin.html" class="back-button">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    const API_BASE_URL = "http://127.0.0.1:8000/api/wedrentify_admin/disputes"; 
+    let allComplaints = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const tableBody = document.getElementById('disputesTableBody');
+        tableBody.innerHTML = `<tr><td colspan="12" style="text-align:center;">Loading disputes...</td></tr>`;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            allComplaints = await response.json();
+            renderTable(allComplaints);
+
+        } catch (error) {
+            console.error("Failed to fetch disputes:", error);
+            tableBody.innerHTML = `<tr><td colspan="12" style="text-align:center; color: red;">Failed to load data. Check console for errors.</td></tr>`;
+        }
+    });
+
+    function renderTable(complaints) {
+        const tableBody = document.getElementById('disputesTableBody');
+        
+        const auctionComplaints = complaints.filter(c => c.dispute_type.toLowerCase().includes('auction'));
+        
+        if (auctionComplaints.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="12" style="text-align:center;">No auction disputes found.</td></tr>`;
+            return;
+        }
+
+        tableBody.innerHTML = auctionComplaints.map(c => `
+            <!-- CHANGE 2: Data attribute update -->
+            <tr data-complaint-number="${c.complaint_number}">
+                <td>#${c.complaint_number}</td>
+                <td>${c.user_role}</td>
+                <td>${c.cnic}</td>
+                <td>${c.username}</td>
+                <td>${c.full_name}</td>
+                <td>${c.phone_number}</td>
+                <td style="white-space: pre-wrap; min-width: 200px;">${c.details}</td>
+                <td>${c.against_username || 'N/A'}</td>
+                <td>${c.against_contact || 'N/A'}</td>
+                <td class="status-${c.status.toLowerCase()}">${c.status}</td>
+                <td>${new Date(c.created_at).toLocaleDateString()}</td>
+                <td>
+                    <button 
+                        class="action-btn resolve-btn ${c.status === 'Resolved' ? 'resolved' : ''}" 
+                        onclick="resolveComplaint(${c.complaint_number}, this)"
+                        ${c.status === 'Resolved' ? 'disabled' : ''}>
+                        Resolve
+                    </button>
+                    <button class="action-btn delete-btn" onclick="deleteComplaint(${c.complaint_number}, this)">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function searchDispute() {
+        let input = document.getElementById("searchInput").value.trim();
+        document.querySelectorAll("tbody tr").forEach(row => {
+            row.classList.remove("highlight");
+            
+            // --- CHANGE 3: SEARCH LOGIC UPDATE ---
+            // Ab yeh 'data-complaint-number' se match karega
+            if (input && row.dataset.complaintNumber.includes(input)) {
+                row.classList.add("highlight");
+                row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
+
+    async function resolveComplaint(complaintNumber, buttonElement) {
+        if (!confirm(`Are you sure you want to mark complaint #${complaintNumber} as Resolved?`)) return;
+        try {
+            const response = await fetch(`${API_BASE_URL}/${complaintNumber}/resolve/`, { method: 'PUT' });
+            if (!response.ok) throw new Error('Failed to update status');
+            const row = buttonElement.closest('tr');
+            row.querySelector('.status-pending, .status-resolved').textContent = 'Resolved';
+            row.querySelector('.status-pending, .status-resolved').className = 'status-resolved';
+            buttonElement.classList.add('resolved');
+            buttonElement.disabled = true;
+            alert('Complaint status updated to Resolved.');
+        } catch (error) {
+            console.error("Error resolving complaint:", error);
+            alert('Failed to update complaint status.');
+        }
+    }
+
+    async function deleteComplaint(complaintNumber, buttonElement) {
+        if (!confirm(`Are you sure you want to permanently delete complaint #${complaintNumber}?`)) return;
+        try {
+            const response = await fetch(`${API_BASE_URL}/${complaintNumber}/delete/`, { method: 'DELETE' });
+            if (!response.ok) throw new Error('Failed to delete');
+            buttonElement.closest('tr').remove();
+            alert('Complaint deleted successfully.');
+        } catch (error) {
+            console.error("Error deleting complaint:", error);
+            alert('Failed to delete complaint.');
+        }
+    }
+  </script>
+</body>
+</html>
+
+

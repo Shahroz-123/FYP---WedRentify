@@ -1,0 +1,1004 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.p-product-con {
+  text-align: center !important;
+}
+
+.header-container {
+  padding: 10px 0px;
+      /* box-shadow: 0 1px 3px -2px black; */
+}
+
+.pagination button {
+    width: 200px;
+}
+
+.header-container > .navbar {
+    /* display: flex; */
+    /* flex-direction: row; */
+    flex-wrap: nowrap;
+    gap: 30px;
+}
+
+.header-container #navbarSupportedContent {
+    /* display: flex; */
+    justify-content: flex-end;
+}
+
+.header-container > .navbar p {
+  margin-bottom: 0px !important;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", system-ui;
+}
+/* 1. Define the animation "fallFromAbove"
+*/
+@keyframes fallFromAbove {
+  /* Start state: The element is invisible and positioned 100% above its normal spot */
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  
+  /* End state: The element is fully visible and in its final position */
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 2. Apply the animation to your image's container
+*/
+.herofall {
+  /* We set opacity to 0 by default so it's hidden *before* the animation starts */
+  opacity: 0;
+
+  /* Use the animation we defined */
+  animation-name: fallFromAbove;
+  
+  /* How long the animation takes */
+  animation-duration: 1s; /* You can adjust this (e.g., 1.2s, 0.8s) */
+  
+  /* This makes it slow down as it "lands" - feels more natural */
+  animation-timing-function: ease-out;
+  
+  /* This tells the animation to *stay* at its final state (opacity: 1, translateY: 0) */
+  animation-fill-mode: forwards;
+  
+  /* Optional: Add a small delay after the page loads to make it feel smoother */
+  animation-delay: 0.4s; 
+}
+
+.navbar{
+  width: 100% !important;
+    position: static !important; /* Makes it scroll with the page */
+    margin-bottom: 0 !important;
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 20px;
+    /* box-shadow: 0 1px 3px -2px black; */
+}
+
+.nav-logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-logo p{
+    color: rgb(110, 25, 25);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.nav-menu{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 50px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.nav-menu li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+}
+
+.nav-menu li a{
+    text-decoration: none;
+    color: black;
+}
+
+.nav-menu hr{
+    border: none;
+    width: 80%;
+    height: 3px;
+    border-radius: 10px;
+    background-color: #EE7373;
+}
+
+.nav-login-cart{
+    display: flex;
+    align-items: center;
+    gap: 45px;
+    
+}
+
+.nav-login-cart button{
+    width: 127px;
+    height: 48px;
+    outline: none;
+    border: 1px solid #EE7373;
+    border-radius: 75px;
+    color: black !important;
+border-radius: 75px !important;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: white;
+    cursor: pointer;
+}
+.nav-login-cart button:hover{
+color: #fff !important;
+}
+.nav-login-cart button:active{
+    background-color: #EE7373;
+    color: white;
+    border: none;
+}
+.nav-login-cart button:hover{
+  background-color: #EE7373;
+  color: white;
+}
+.nav-login-cart img{
+    width: 30px;
+}
+
+.nav-cart-count{
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -30px;
+    margin-left: -55px;
+    border-radius: 14px;
+    background-color: red;
+    color: white;
+}
+
+.hero {
+
+    height: 100vh;
+    background: linear-gradient(180deg, #ffe2ea, #df315727 60%);
+    display: flex;
+}
+
+.hero-left {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    padding-left: 180px;
+    line-height: 1.1;
+}
+
+.hero-left h2 {
+    color: #090909;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.hero-left p {
+    color: #171717;
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.hero-hand-icon {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hero-hand-icon img {
+    width: 78px;
+}
+
+.logoname{
+    color: #171717;
+    font-size: 75px;
+}
+
+.hero-para{
+    font-size: 16px;
+    color: gray;
+    margin-top: 30px;
+}
+
+.hero-latest-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 210px;
+    height: 60px;
+    border-radius: 75px;
+    margin-top: 30px;
+    background: #EE7373;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.hero-latest-btn img{
+    width: 20px;
+}
+
+.hero-right{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-right img{
+    width: 700px;
+}
+
+
+
+.offers-section{
+    width: 100%;
+    height: 60vh;
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    padding: 0 140px;
+    margin-bottom: 100px;
+    background: linear-gradient(180deg, #ffbfcf 0%, #ffa1bc30 60%);
+    overflow: hidden;
+}
+
+.offers-section-left{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.offers-section-left h1{
+    color: #171717;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.offers-section-left p{
+    color:gray;
+    font-size: 14px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+
+
+.offers-section-right{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 50px;
+}
+
+.offers-section-right svg{
+    width: 400px;
+    margin-bottom: 50px;
+    color: #763a3a;
+}
+
+
+.how-it-works-item svg{
+    width: 40px;
+    margin-right: 30px;
+    color: #763a3a;
+}
+
+.how-it-works {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 20px;
+    gap: 50px;
+    /* position: relative; */
+    
+}
+
+
+
+.how-it-works>div:nth-child(2) {
+  width: 70%;
+}
+
+.how-it-works-image {
+width: 30%;
+background-color: #EE7373;
+}
+
+.how-it-works-image img {
+    width: 100%;
+    margin: -20px -20px 20px -20px;
+    /* height: 550px;
+    object-fit: cover;
+    position: absolute;
+    top: 20px;
+    left: 150px;
+    z-index: 10; */
+}
+
+.how-it-works-image div {
+    width: 350px;
+    height: 550px;
+    background-color: #EE7373;
+    object-fit: cover;
+    position: absolute;
+    top: 30px;
+    left: 170px;
+    z-index: 1;
+}
+
+.how-it-works-content {
+    /* padding-left: 300px;
+    margin-bottom: 200px; */
+    width: 70%;
+}
+
+.how-it-works-content h2{
+    margin-bottom: 30px;
+}
+
+.how-it-works-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.how-it-works-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.how-it-works-item h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.how-it-works-item p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #333;
+}
+
+
+.newsletter{
+    width: 100%;
+    /* height: 40vh; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 50px;
+    margin-bottom: 80px;
+    margin-top: 70px;
+    background: linear-gradient(180deg, #ffbfcf 0%, #ffa1bc30 60%);
+    gap: 10px;
+}
+
+.newsletter h1{
+    color: #454545;
+    font-size: 55px;
+    font-weight: 600;
+}
+
+.newsletter p {
+    color: #454545;
+    font-style: 20px;
+}
+
+.newsletter div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    width: 60%;
+    /* height: 70px; */
+    border-radius: 80px;
+    border: 1px solid #e3e3e3;
+}
+
+.newsletter input {
+    /* width: 500px; */
+    margin-left: 30px;
+    border: none;
+    outline: none;
+    color: #616161;
+    font-style: 16px;
+}
+
+.newsletter div button{
+    /* width: 210px;
+    height: 70px; */
+    border-radius: 80px;
+    border: none;
+    cursor: pointer;
+    background-color: #EE7373;
+    color: white;
+    font-size: 16px;
+}
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.footer-logo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo img{ 
+    width: 80px;
+}
+
+.footer-logo p{
+    color: #383838;
+    font-size: 46px;
+    font-weight: 700;
+}
+
+.footer-links{
+    display: flex;
+    list-style: none;
+    gap: 50px;
+    color: #252525;
+    font-size: 16px;
+}
+
+.footer-links li{
+    cursor: pointer;
+}
+
+.footer-social-icon{
+    display: flex;
+    gap: 20px;
+}
+
+.footer-icons-containe{
+    padding: 10px;
+    padding-bottom: 6px;
+    background: #fbfbfb;
+    border: 1px solid #ebebeb;
+}
+
+.footer-copyright{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+    font-size: 16px;
+}
+
+.footer-copyright hr{
+    width: 80%;
+    border: none;
+    border-radius: 10px;
+    height: 2px;
+    background: #c7c7c7;
+}   
+
+/******************************************************************\
+ * READ FIRST:
+ *
+ * The target for this solution is keep compatibility with old
+ * browsers by using only the float property.
+ *
+ * Four Card Section Challenge | Main Stylesheet.
+ *
+ * Challenge by Frontend Mentor. Coded by Alfonso Suarez.
+ * 
+ ******************************************************************/
+
+/*
+ * # Common Styles Rules 
+ */
+
+/*
+ * ## Global
+ */
+
+/* 
+ * I would prefer to declare variables, but due the bad compatibility
+ * between IE browsers and CSS variables, I omitted their use.
+ *
+:root {
+  --color-prim-cyan:   hsl(180, 62%, 55%);
+  --color-prim-red:    hsl(0, 78%, 62%);
+  --color-prim-orange: hsl(34, 97%, 64%);
+  --color-prim-blue:   hsl(212, 86%, 64%);
+  --color-neut-vdblue: hsl(234, 12%, 34%);
+  --color-neut-grblue: hsl(229, 6%, 66%);  
+}
+ *
+ */
+
+/*
+ * ## Document Body
+ */
+
+ body {
+    /* Clean content offset */
+    margin: 0; padding: 0;
+  
+    /* Set common font styles */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+  }
+  
+  /*
+   * ## Elements Styles
+   */
+  
+  h1, h2 {
+    font-weight: 600;
+    color: hsl(234, 12%, 34%);
+  }
+  
+  p { color: hsl(229, 6%, 66%); }
+  
+  /* - - - */
+  
+  /*
+   * # Specific Styles Rules
+   */
+  
+  /*
+   * ## Main Header Element
+   */
+  
+  header {
+    margin: 80px 30px 75px;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+
+  header > h1 {
+    margin: 20px 0;
+    font-weight: 200;
+  }
+  
+  header > h1 strong {
+    font-weight: 600;
+  }
+  
+  header > p {
+    max-width: 820px;
+    margin: auto;
+  }
+  
+  @media (max-width: 443px) {
+    header > h1 { font-size: 1.6em; }
+  }
+   
+  /*
+   * ## Cards Container Class
+   */
+  
+  .cards-container {
+    /* List Styling Clean-Up */
+    list-style: none;
+    padding: 0; margin: 0;
+  
+    /* Alignment */
+    margin: auto;
+  }
+  
+
+  
+  @media (min-width: 788px) {
+    .cards-container { 
+      width: 728px;
+    }
+    /* Clear Fix */
+    .cards-container::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+  }
+  
+  @media (min-width: 1166px) {
+    .cards-container {
+      width: 1106px;
+    }
+  }
+  
+  /*
+   * ## Feature Card Class
+   */
+  
+  [class$='feature-card'] {
+    /* Positioning and Sizing */
+    position: relative;
+    box-sizing: border-box;
+    width: 350px; 
+    /* height: 250px; */
+  
+    /* Alignment */
+    margin: 0;
+    padding: 32px;
+  
+    /* Box Details */
+    border-radius: 10px;
+    border-top: solid 5px black;
+    box-shadow: 2px 5px 20px rgb(0,0,0,0.1);
+  }
+   
+  /*
+   * ### Inner Elements
+   */
+  
+  [class$='feature-card'] h2, [class$='feature-card'] p { margin: 0; }
+  
+  [class$='feature-card'] img {
+    position: absolute;
+    bottom: 32px; right: 32px;
+  }
+  
+  
+  [class$='feature-card'][class*='cyan'] {
+    border-color: #EE7373;
+  }
+  
+  [class$='feature-card'][class*='red'] {
+    border-color: #EE7373;
+  }
+  
+  [class$='feature-card'][class*='orange'] {
+    border-color: #EE7373;
+  }
+  
+  [class$='feature-card'][class*='blue'] {
+    border-color: #EE7373;
+  }
+  
+
+  
+  @media (min-width: 788px) {
+    [class$='feature-card'] {
+      float: left;
+    }
+  
+    @media (min-width: 1166px) {
+      
+      [class$='feature-card']:first-child {
+        margin: 140px 0;
+      }
+     
+      [class$='feature-card']:nth-child(2),
+      [class$='feature-card']:nth-child(3) {
+        margin: 0 22px;
+      }
+  
+      [class$='feature-card']:last-child {
+        margin-top: -110px;
+      }
+  
+      [class$='feature-card']:nth-child(3) {
+        margin-top: 30px;
+      }
+    }
+  
+    @media (max-width: 1165px) {
+  
+      [class$='feature-card']:nth-child(3),
+      [class$='feature-card']:nth-child(4) {
+        margin-top: 30px;
+      }
+  
+      [class$='feature-card']:nth-child(2),
+      [class$='feature-card']:nth-child(4) {
+        margin-left: 28px;
+      }
+    }
+  }
+  
+  @media (max-width: 787px) {
+  
+    [class$='feature-card'] {
+      width: 300px; 
+      /* height: 220px; */
+      margin: auto;
+    }
+  
+    [class$='feature-card']:not(:first-child) {
+      margin-top: 22px;
+    }
+  }
+  
+  /*
+   * ## Main Footer
+   */
+  
+  footer { margin-top: 80px }
+  
+  /*
+   * ## Attribution Watermark
+   */
+  
+  .attribution { font-size: 11px; text-align: center; }
+  .attribution a { color: hsl(228, 45%, 44%); }
+  
+
+.donation-section {
+width: 100%;
+    /* height: 60vh; */
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    padding: 50px 140px;
+    margin-bottom: 100px;
+    background: linear-gradient(180deg, #ffbfcf 0%, #ffa1bc30 60%);
+    overflow: hidden;
+}
+
+.donation-section-left {
+  flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.donation-section-left h1 {
+color: #171717;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.donation-section-left p {
+    color:gray;
+    font-size: 14px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.donation-buttons button {
+
+    width: 282px;
+    height: 70px;
+    border-radius: 35px;
+    border: none;
+    color: white;
+    background-color: #EE7373;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+
+
+.donation-section-right svg {
+  width: 200px;
+  height: 200px;
+  color: #b3005a;
+}
+
+
+
+
+.donation-section{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* padding-top: 50px; */
+}
+/* --- FIXING THE X-SCROLLBAR AND OVERFLOW --- */
+
+/* 1. CRITICAL GLOBAL FIX: Hide the scrollbar and remove fixed top padding */
+body {
+    overflow-x: hidden !important; 
+    /* Overrides any fixed padding that might push content down */
+    padding-top: 0 !important; 
+}
+
+/* FIX: Ensure Navbar is full width and NOT fixed (if it was) */
+.navbar {
+    width: 100% !important;
+    position: static !important; /* Makes it scrollable */
+    margin-bottom: 0 !important;
+}
+
+
+/* 2. MOBILE & TABLET OVERRIDES (The primary area causing overflow) */
+
+/* General Padding Adjustment for Medium Screens (1200px and below) */
+@media (max-width: 1200px) {
+    /* Reduce large fixed padding on text sections */
+    .hero-left {
+        padding-left: 50px !important; 
+        padding-right: 50px !important; /* Add padding to the right for balance */
+    }
+    
+    /* Reduce large fixed padding on full-width sections */
+    .offers-section,
+    .donation-section,
+    .newsletter {
+        padding: 0 40px !important; 
+    }
+}
+
+
+/* Final Mobile Overrides (768px and below) */
+@media (max-width: 768px) {
+    
+    /* Hero Section Fixes: Stacking and Centering */
+    .hero {
+        flex-direction: column !important; /* Stack columns */
+        height: auto !important; /* Allow height to collapse */
+    }
+
+    /* Hero Left (Text): Override fixed desktop padding */
+    .hero-left {
+        padding: 40px 20px 30px 20px !important; /* Uniform, smaller padding */
+        width: 100% !important;
+        /* Center content horizontally */
+        align-items: center !important; 
+        text-align: center !important;
+    }
+    
+    /* Hero Right (Image): Overriding fixed 700px width */
+    .hero-right {
+        width: 100% !important;
+        padding: 0 !important;
+        justify-content: center !important;
+        overflow: hidden !important; /* Contains any remaining image edge */
+    }
+    .hero-right img {
+        /* CRITICAL FIX: Scale the large image down */
+        width: 90% !important; 
+        height: auto !important;
+        max-width: 500px !important;
+    }
+    
+    /* Global Section Padding Fix (Overrides 140px padding) */
+    .offers-section, 
+    .donation-section, 
+    .how-it-works, 
+    .newsletter {
+        padding: 40px 20px !important; /* Small padding on all sides */
+        width: 100% !important;
+    }
+}
+/* 1. Base style for your rounded button */
+.pop-out-button {
+  padding: 12px 24px;         /* Adjust padding as needed */
+  border-radius: 50px;        /* Makes it fully rounded */
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+ /* Example background color */
+  cursor: pointer;
+  
+  /* --- This is the secret sauce --- */
+  /* Tells the browser to animate changes to 'transform' and 'box-shadow' */
+  /* It takes 0.3 seconds and has an 'ease' effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* 2. The :hover state (when the mouse is over it) */
+.pop-out-button:hover {
+  /* Scales the button to 110% of its original size */
+  transform: scale(1.1); 
+   transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 6px 20px rgba(238, 115, 115, 0.6);
+}
+/* 1. Define the continuous "pulse" animation
+*/
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05); /* A subtle 5% grow */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 2. Style for the heart (add this class to your SVG)
+*/
+.interactive-heart {
+  /* Apply the continuous pulse animation */
+  animation-name: pulse;
+  animation-duration: 2.5s; /* How long one pulse takes */
+  animation-iteration-count: infinite; /* Loop forever */
+  animation-timing-function: ease-in-out;
+
+  /* This is for the hover transition */
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+/* 3. The "Pop Out" effect on hover
+*/
+.interactive-heart:hover {
+  /* Pause the slow pulse */
+  animation-play-state: paused;
+  
+  /* Scale it up more to "pop" it */
+  transform: scale(1.15); /* A bigger 15% pop */
+  
+  /* This adds a shadow to the *shape* of the heart, 
+    making it "come out of the screen".
+    (We use filter: drop-shadow for SVGs, not box-shadow)
+  */
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.2));
+}
+
+        @media (max-width: 576px) {
+                     .header-container>.navbar {
+                gap: 10px !important;
+            }
+
+            .nav-login-cart {
+                flex-direction: column;
+                gap: 10px;
+                padding-top: 20px;
+            }
+           .nav-menu {
+                gap: 5px;
+            }
+
+            .navbar {
+              padding: 8px 0px !important;
+            }
+
+            .nav-logo p {
+              font-size: 20px !important;
+            }
+
+            .pagination {
+ flex-direction: column;
+ gap: 10px !important;
+}
+
+.how-it-works-image img {
+margin: -10px -10px 10px -10px;}
+        }
